@@ -1,5 +1,7 @@
 # Personel Yönetim ve Bilgilendirme Sistemi
 
+![Azure deployment](https://github.com/seyyitatim/PersonelYonetimBilgilendirmeSistemi/workflows/Azure%20deployment/badge.svg)
+
 Bu proje firmalarda ki personellerin yönetimini kolaylaştırmayı amaçlamaktadır.
 Proje üç ana kısımdan oluşmaktadır;
 
