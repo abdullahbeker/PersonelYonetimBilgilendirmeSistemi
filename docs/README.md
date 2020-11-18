@@ -3,11 +3,11 @@
 ## Modüller
 
 - Profil (Profile)
-- Yıllık izin (Annual Leave) (Alperen)
-- Duyuru ()
-- Eğitim (Seyyit)
-- Zimmet (Abdullah)
-- Borç & Talep ()
+- İzin (Leave)
+- Duyuru
+- Eğitim (Training)
+- Zimmet (Asset)
+- Borç & Talep
 
 ### Profil
 
@@ -106,9 +106,19 @@ class User {
 }
 ```
 
-### Yıllık İzin (Annual Leave)
+### İzin (Leave)
 
-- Ücretli ve ücretsiz olmak üzere iki tip izin vardır.
+- Ücretli ve ücretsiz olmak üzere iki tip izin vardır
+- Yetkili kişi izin türlerini belirler
+- Personel belli bir türden ve süreden izin talep eder
+- Yetkili talep edilen izinleri görüntüleyebilir, onaylayabilir veya reddedebilir
+
+#### Sayfalar
+
+- İzin tipi oluşturma
+- İzin isteğinde bulunma
+- İzin onay & ret ekranı
+- İzin isteklerini görüntüleme
 
 ```csharp
 class LeaveType{
@@ -140,30 +150,37 @@ class TimeStamps {
 
 ### Zimmetler
 
-- Zimmet kategorileri
-- Zimmetin kendisi (Eklemesi çalışan sayfasından yapılıyor)
-- Çalışana atanması
-- Zimmet raporu
+- Zimmetleri yetkili oluşturur, düzenler, siler, personele atar ve iade alır
+- Zimmet kategorilerini yetkili oluşturur, düzenler ve siler
+- Zimmetler süreli veya süresiz verilebilir
+- Zimmet fişi oluşturulabilir
 
 #### Sayfalar
 
-- Zimmetler Sayfası
-- Zimmet Ekleme Sayfası
-- Zimmet Düzenleme Sayfası
-- Zimmet Silme
-- Zimmet Atama
-- Zimmet Kategorileri
-- Zimmet Kategorisi Ekleme
-- Zimmet Kategorisi Silme
-- Zimmet Kategorisi Düzenleme
+- Zimmetler
+- Zimmet ekleme
+- Zimmet düzenleme
+- Zimmet silme
+- Zimmet atama
+- Zimmet kategorileri
+- Zimmet kategorisi ekleme
+- Zimmet kategorisi silme
+- Zimmet kategorisi düzenleme
 
 ```csharp
+class AssetPersonnel {
+    int PersonnelId;
+    int AssetId;
+    DateTime GivenDate;
+    DateTime ReturnDate;
+    bool IsReturned;
+    TimeStamps TimeStamps;
+}
+
 class Asset {
     int Id;
     int AssetCategoryId;
     string SerialNumber;
-    DateTime GivenDate;
-    DateTime ReturnDate;
     string Description;
     TimeStamps TimeStamps;
 }
@@ -173,16 +190,19 @@ class AssetCategory {
     string Name;
     TimeStamps TimeStamps;
 }
+
+class TimeStamps {
+    DateTime CreatedAt;
+    DateTime UpdatedAt;
+}
 ```
 
 ### Eğitim
 
-#### Bilgi
-
-- Eğitimi yetkili kişi oluşturacak.
-- Eğitimler yetkili kişi tarafından personele atanacak.
-- Personelin eğitimle ilgili problemi olduğunda, yetkili kişi eğitim durumunu güncelleyebilecek.
-- Eğitimlerin durumu sistem bir sorunla karşılaşmadığı sürece kendi otomatik gerçekleştirecektir.
+- Eğitimi yetkili kişi oluşturacak
+- Eğitimler yetkili kişi tarafından personele atanacak
+- Personelin eğitimle ilgili problemi olduğunda, yetkili kişi eğitim durumunu güncelleyebilecek
+- Eğitimlerin durumu sistem bir sorunla karşılaşmadığı sürece kendi otomatik gerçekleştirecektir
 
 #### Sayfalar
 
@@ -192,16 +212,17 @@ class AssetCategory {
 - Eğitim durum güncellemesi.
 
 ```csharp
-class Trainings {
+class Training {
     string TrainingName;
     DateTime StartDate;
     DateTime FinishDate;
     string Detail;
     string Location;
     string EducatingFirm;
+    string Instructor;
 }
 
-class TrainingsPersonnels {
+class TrainingPersonnel {
     int TrainingId;
     int PersonnelId;
     int StatusId;
