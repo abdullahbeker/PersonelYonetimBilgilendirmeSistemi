@@ -107,14 +107,32 @@ class User {
 ```
 
 ### Yıllık İzin (Annual Leave)
+- Ücretli ve ücretsiz olmak üzere iki tip izin vardır.
 
-#### Ücretli İzin
+```csharp
+class LeaveType{
+    int Id;
+    string LeaveName;
+    bool IsPaid;
+}
 
--   Personeller işe girdikten tam bir yıl sonra yıllık izin hakkı kazanır
--   Kalan izin hakkı negatif olabilir (Avans)
--   Tatil günleri (pazar) ve özel günler izin hakkından düşülmez
--   Personeller izin kullanma talebinde bulunur. Bu talep yetkili kullanıcılar tarafından onaylanır
+class LeaveRequest{
+    int Id;
+    int PersonnelId;
+    int LeaveTypeId;
+    int LeaveStatusId;
+    DateTime LeaveStartDate;
+    DateTime LeaveFinishDate;
+    TimeStamps TimeStamps;
+}
 
-#### Ücretsiz İzin
+class LeaveStatus{
+    int Id;
+    string Name;
+}
 
--   Doğum izni
+class TimeStamps {
+    DateTime CreatedAt;
+    DateTime UpdatedAt;
+}
+```
