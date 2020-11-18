@@ -108,16 +108,35 @@ class User {
 
 ### Yıllık İzin (Annual Leave)
 
-#### Ücretli İzin
+- Ücretli ve ücretsiz olmak üzere iki tip izin vardır.
 
-- Personeller işe girdikten tam bir yıl sonra yıllık izin hakkı kazanır
-- Kalan izin hakkı negatif olabilir (Avans)
-- Tatil günleri (pazar) ve özel günler izin hakkından düşülmez
-- Personeller izin kullanma talebinde bulunur. Bu talep yetkili kullanıcılar tarafından onaylanır
+```csharp
+class LeaveType{
+    int Id;
+    string LeaveName;
+    bool IsPaid;
+}
 
-#### Ücretsiz İzin
+class LeaveRequest{
+    int Id;
+    int UserId;
+    int LeaveTypeId;
+    int LeaveStatusId;
+    DateTime LeaveStartDate;
+    DateTime LeaveFinishDate;
+    TimeStamps TimeStamps;
+}
 
-- Doğum izni
+class LeaveStatus{
+    int Id;
+    string Name;
+}
+
+class TimeStamps {
+    DateTime CreatedAt;
+    DateTime UpdatedAt;
+}
+```
 
 ### Zimmetler
 
@@ -173,20 +192,22 @@ class AssetCategory {
 - Eğitim durum güncellemesi.
 
 ```csharp
-class Trainings{
+class Trainings {
     string TrainingName;
     DateTime StartDate;
     DateTime FinishDate;
     string Detail;
     string Location;
-    string EğitimAlınacakFirma; //düzenlenecek
+    string EducatingFirm;
 }
-class TrainingsPersonnels{
+
+class TrainingsPersonnels {
     int TrainingId;
     int PersonnelId;
     int StatusId;
 }
-class TrainingStatus{
+
+class TrainingStatus {
     int Id;
     int Name;
 }
