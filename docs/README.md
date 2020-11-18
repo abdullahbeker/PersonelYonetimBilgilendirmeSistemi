@@ -2,12 +2,12 @@
 
 ## Modüller
 
--   Profil (Profile)
--   Yıllık izin (Annual Leave)
--   Duyuru
--   Eğitim
--   Zimmet
--   Borç & Talep
+- Profil (Profile)
+- Yıllık izin (Annual Leave) (Alperen)
+- Duyuru ()
+- Eğitim (Seyyit)
+- Zimmet (Abdullah)
+- Borç & Talep ()
 
 ### Profil
 
@@ -110,11 +110,48 @@ class User {
 
 #### Ücretli İzin
 
--   Personeller işe girdikten tam bir yıl sonra yıllık izin hakkı kazanır
--   Kalan izin hakkı negatif olabilir (Avans)
--   Tatil günleri (pazar) ve özel günler izin hakkından düşülmez
--   Personeller izin kullanma talebinde bulunur. Bu talep yetkili kullanıcılar tarafından onaylanır
+- Personeller işe girdikten tam bir yıl sonra yıllık izin hakkı kazanır
+- Kalan izin hakkı negatif olabilir (Avans)
+- Tatil günleri (pazar) ve özel günler izin hakkından düşülmez
+- Personeller izin kullanma talebinde bulunur. Bu talep yetkili kullanıcılar tarafından onaylanır
 
 #### Ücretsiz İzin
 
--   Doğum izni
+- Doğum izni
+
+### Zimmetler
+
+- Zimmet kategorileri
+- Zimmetin kendisi (Eklemesi çalışan sayfasından yapılıyor)
+- Çalışana atanması
+- Zimmet raporu
+
+#### Sayfalar
+
+- Zimmetler Sayfası
+- Zimmet Ekleme Sayfası
+- Zimmet Düzenleme Sayfası
+- Zimmet Silme
+- Zimmet Atama
+- Zimmet Kategorileri
+- Zimmet Kategorisi Ekleme
+- Zimmet Kategorisi Silme
+- Zimmet Kategorisi Düzenleme
+
+```csharp
+class Asset {
+    int Id;
+    int AssetCategoryId;
+    string SerialNumber;
+    DateTime GivenDate;
+    DateTime ReturnDate;
+    string Description;
+    TimeStamps TimeStamps;
+}
+
+class AssetCategory {
+    int Id;
+    string Name;
+    TimeStamps TimeStamps;
+}
+```
