@@ -118,3 +118,36 @@ class User {
 #### Ücretsiz İzin
 
 -   Doğum izni
+
+### Eğitim
+#### Bilgi
+-   Eğitimi yetkili kişi oluşturacak.
+-   Eğitimler yetkili kişi tarafından personele atanacak.
+-   Personelin eğitimle ilgili problemi olduğunda, yetkili kişi eğitim durumunu güncelleyebilecek.
+-   Eğitimlerin durumu sistem bir sorunla karşılaşmadığı sürece kendi otomatik gerçekleştirecektir.
+#### Sayfalar
+
+-   Eğitim oluştur.
+-   Eğitimleri listele.
+-   Eğitim atama.
+-   Eğitim durum güncellemesi.
+
+```csharp
+class Trainings{
+    string TrainingName;
+    DateTime StartDate;
+    DateTime FinishDate;
+    string Detail;
+    string Location;
+    string EğitimAlınacakFirma; //düzenlenecek
+}
+class TrainingsPersonnels{
+    int TrainingId;
+    int PersonnelId;
+    int StatusId;
+}
+class TrainingStatus{
+    int Id;
+    int Name;
+}
+```
