@@ -118,7 +118,7 @@ class LeaveType{
 
 class LeaveRequest{
     int Id;
-    int PersonnelId;
+    int UserId;
     int LeaveTypeId;
     int LeaveStatusId;
     DateTime LeaveStartDate;
