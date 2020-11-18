@@ -2,12 +2,12 @@
 
 ## Modüller
 
--   Profil (Profile)
--   Yıllık izin (Annual Leave)
--   Duyuru
--   Eğitim
--   Zimmet
--   Borç & Talep
+- Profil (Profile)
+- İzin (Leave)
+- Duyuru
+- Eğitim (Training)
+- Zimmet (Asset)
+- Borç & Talep
 
 ### Profil
 
@@ -106,47 +106,129 @@ class User {
 }
 ```
 
-### Yıllık İzin (Annual Leave)
+### İzin (Leave)
 
-#### Ücretli İzin
+- Ücretli ve ücretsiz olmak üzere iki tip izin vardır
+- Yetkili kişi izin türlerini belirler
+- Personel belli bir türden ve süreden izin talep eder
+- Yetkili talep edilen izinleri görüntüleyebilir, onaylayabilir veya reddedebilir
 
--   Personeller işe girdikten tam bir yıl sonra yıllık izin hakkı kazanır
--   Kalan izin hakkı negatif olabilir (Avans)
--   Tatil günleri (pazar) ve özel günler izin hakkından düşülmez
--   Personeller izin kullanma talebinde bulunur. Bu talep yetkili kullanıcılar tarafından onaylanır
-
-#### Ücretsiz İzin
-
--   Doğum izni
-
-### Eğitim
-#### Bilgi
--   Eğitimi yetkili kişi oluşturacak.
--   Eğitimler yetkili kişi tarafından personele atanacak.
--   Personelin eğitimle ilgili problemi olduğunda, yetkili kişi eğitim durumunu güncelleyebilecek.
--   Eğitimlerin durumu sistem bir sorunla karşılaşmadığı sürece kendi otomatik gerçekleştirecektir.
 #### Sayfalar
 
--   Eğitim oluştur.
--   Eğitimleri listele.
--   Eğitim atama.
--   Eğitim durum güncellemesi.
+- İzin tipi oluşturma
+- İzin isteğinde bulunma
+- İzin onay & ret ekranı
+- İzin isteklerini görüntüleme
 
 ```csharp
-class Trainings{
+class LeaveType{
+    int Id;
+    string LeaveName;
+    bool IsPaid;
+}
+
+class LeaveRequest{
+    int Id;
+    int UserId;
+    int LeaveTypeId;
+    int LeaveStatusId;
+    DateTime LeaveStartDate;
+    DateTime LeaveFinishDate;
+    TimeStamps TimeStamps;
+}
+
+class LeaveStatus{
+    int Id;
+    string Name;
+}
+
+class TimeStamps {
+    DateTime CreatedAt;
+    DateTime UpdatedAt;
+}
+```
+
+### Zimmetler
+
+- Zimmetleri yetkili oluşturur, düzenler, siler, personele atar ve iade alır
+- Zimmet kategorilerini yetkili oluşturur, düzenler ve siler
+- Zimmetler süreli veya süresiz verilebilir
+- Zimmet fişi oluşturulabilir
+
+#### Sayfalar
+
+- Zimmetler
+- Zimmet ekleme
+- Zimmet düzenleme
+- Zimmet silme
+- Zimmet atama
+- Zimmet kategorileri
+- Zimmet kategorisi ekleme
+- Zimmet kategorisi silme
+- Zimmet kategorisi düzenleme
+
+```csharp
+class AssetPersonnel {
+    int PersonnelId;
+    int AssetId;
+    DateTime GivenDate;
+    DateTime ReturnDate;
+    bool IsReturned;
+    TimeStamps TimeStamps;
+}
+
+class Asset {
+    int Id;
+    int AssetCategoryId;
+    string SerialNumber;
+    string Description;
+    TimeStamps TimeStamps;
+}
+
+class AssetCategory {
+    int Id;
+    string Name;
+    TimeStamps TimeStamps;
+}
+
+class TimeStamps {
+    DateTime CreatedAt;
+    DateTime UpdatedAt;
+}
+```
+
+### Eğitim
+
+- Eğitimi yetkili kişi oluşturacak
+- Eğitimler yetkili kişi tarafından personele atanacak
+- Personelin eğitimle ilgili problemi olduğunda, yetkili kişi eğitim durumunu güncelleyebilecek
+- Eğitimlerin durumu sistem bir sorunla karşılaşmadığı sürece kendi otomatik gerçekleştirecektir
+
+#### Sayfalar
+
+- Eğitim oluştur.
+- Eğitimleri listele.
+- Eğitim atama.
+- Eğitim durum güncellemesi.
+
+```csharp
+class Training {
     string TrainingName;
     DateTime StartDate;
     DateTime FinishDate;
     string Detail;
     string Location;
-    string EğitimAlınacakFirma; //düzenlenecek
+    string EducatingFirm;
+    string Instructor;
 }
-class TrainingsPersonnels{
+
+class TrainingPersonnel {
     int TrainingId;
     int PersonnelId;
     int StatusId;
 }
-class TrainingStatus{
+
+class TrainingStatus {
     int Id;
     int Name;
 }
