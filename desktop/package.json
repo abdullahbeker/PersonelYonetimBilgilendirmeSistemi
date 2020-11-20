@@ -1,34 +1,64 @@
 {
-  "name": "erza-ui-desktop",
-  "version": "1.0.0",
-  "description": "Erza project's desktop application for admin users only to manage personnels",
-  "main": "main.js",
-  "scripts": {
-    "build": "webpack",
-    "dev": "webpack-dev-server",
-    "electron": "electron ."
+  "name": "desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "pybs desktop application",
+  "author": {
+    "name": "Abdullah Beker",
+    "email": "abdullahbeker.54@hotmail.com"
   },
-  "author": "Abdullah Beker",
-  "license": "ISC",
+  "main": "public/electron.js",
+  "homepage": "./",
   "dependencies": {
-    "html-webpack-plugin": "^4.4.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.1",
+    "@testing-library/user-event": "^12.2.2",
+    "electron-is-dev": "^1.2.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.0",
+    "web-vitals": "^0.2.4"
+  },
+  "scripts": {
+    "react-start": "react-scripts start",
+    "react-build": "react-scripts build",
+    "react-test": "react-scripts test",
+    "react-eject": "react-scripts eject",
+    "electron-build": "electron-builder",
+    "release": "npm run react-build && electron-builder --publish=always",
+    "build": "npm run react-build && npm run electron-build",
+    "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.3.1",
-    "@babel/preset-react": "^7.10.4",
-    "autoprefixer": "^9.8.6",
-    "babel-loader": "^8.0.5",
-    "css-loader": "^4.2.2",
-    "electron": "^10.1.0",
-    "node-sass": "^4.14.1",
-    "postcss-loader": "^3.0.0",
-    "sass-loader": "^10.0.1",
-    "style-loader": "^1.2.1",
-    "webpack": "^4.29.0",
-    "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.1.14"
+    "concurrently": "^5.3.0",
+    "cross-env": "^7.0.2",
+    "electron": "^11.0.1",
+    "electron-builder": "^22.9.1",
+    "wait-on": "^5.2.0"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "jsxBracketSameLine": true,
+    "semi": false
   }
 }

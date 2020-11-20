@@ -1,21 +1,23 @@
 const { app, BrowserWindow } = require('electron')
+const isDev = require('electron-is-dev')
+const path = require('path')
 
 let mainWindow
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
     },
     show: false,
     width: 1200,
     height: 800,
     minWidth: 1000,
-    minHeight: 700
+    minHeight: 700,
   })
+  console.log('isDev: ' + isDev)
   mainWindow.maximize()
-  mainWindow.loadURL('http://localhost:3000')
-  //mainWindow.webContents.openDevTools()
+  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`)
 })
 
 app.on('window-all-closed', () => {
