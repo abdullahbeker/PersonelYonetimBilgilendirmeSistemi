@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20201120150409_ProfileTablesRelations.cs" />
+    <Compile Remove="Migrations\20201120150409_ProfileTablesRelations.Designer.cs" />
+    <Compile Remove="Migrations\20201120150630_ProfileTablesRelations.cs" />
+    <Compile Remove="Migrations\20201120150630_ProfileTablesRelations.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.9">
       <PrivateAssets>all</PrivateAssets>

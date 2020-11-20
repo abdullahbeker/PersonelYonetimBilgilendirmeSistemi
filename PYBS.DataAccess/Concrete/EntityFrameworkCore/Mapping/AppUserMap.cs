@@ -20,6 +20,16 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Mapping
             builder.Property(x => x.Password).HasMaxLength(100).IsRequired();
 
             builder.HasMany(x => x.AppUserRoles).WithOne(x => x.AppUser).HasForeignKey(x => x.AppUserId).OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(x => x.BloodType).WithMany(x => x.AppUsers).HasForeignKey(x => x.BloodTypeId); 
+
+            builder.HasOne(x => x.Gender).WithMany(x => x.AppUsers).HasForeignKey(x => x.GenderId);
+
+            builder.HasOne(x => x.MaritalStatus).WithMany(x => x.AppUsers).HasForeignKey(x => x.MaritalStatusId);
+
+            builder.HasOne(x => x.Province).WithMany(x => x.AppUsers).HasForeignKey(x=>x.ProvinceId).OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.District).WithMany(x => x.AppUsers).HasForeignKey(x => x.DistrictId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
