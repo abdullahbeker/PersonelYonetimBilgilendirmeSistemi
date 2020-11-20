@@ -6,7 +6,7 @@ name: Azure deployment
 on:
     push:
         paths: 
-            - backend/
+            - backend
         branches:
             - main
 
