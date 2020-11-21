@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Mapping
 {
-    public class TrainingStatusMap
+    public class TrainingStatusMap:IEntityTypeConfiguration<TrainingStatus>
     {
         public void Configure(EntityTypeBuilder<TrainingStatus> builder)
         {

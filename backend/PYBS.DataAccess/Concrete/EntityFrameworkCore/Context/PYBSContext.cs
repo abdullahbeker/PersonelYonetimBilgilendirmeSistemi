@@ -17,6 +17,7 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
             modelBuilder.ApplyConfiguration(new AppUserRoleMap());
             modelBuilder.ApplyConfiguration(new TrainingMap());
             modelBuilder.ApplyConfiguration(new TrainingPersonnelMap());
+            modelBuilder.ApplyConfiguration(new TrainingStatusMap());
         }
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<AppRole> AppRoles { get; set; }
