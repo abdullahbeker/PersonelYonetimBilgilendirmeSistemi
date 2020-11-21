@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PYBS.DataAccess.Concrete.EntityFrameworkCore.Mapping;
 using PYBS.Entity.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
 {
@@ -18,6 +15,8 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
             modelBuilder.ApplyConfiguration(new AppUserMap());
             modelBuilder.ApplyConfiguration(new AppRoleMap());
             modelBuilder.ApplyConfiguration(new AppUserRoleMap());
+            modelBuilder.ApplyConfiguration(new TrainingMap());
+            modelBuilder.ApplyConfiguration(new TrainingPersonnelMap());
         }
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<AppRole> AppRoles { get; set; }
@@ -27,6 +26,9 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
         public DbSet<Gender> Genders { get; set; }
         public DbSet<MaritalStatus> MaritalStatuses { get; set; }
         public DbSet<Province> Provinces { get; set; }
+        public DbSet<Training> Trainings { get; set; }
+        public DbSet<TrainingPersonnel> TrainingPersonnels { get; set; }
+        public DbSet<TrainingStatus> TrainingStatuses { get; set; }
 
 
     }

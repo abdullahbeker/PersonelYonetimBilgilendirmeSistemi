@@ -5,9 +5,9 @@ using System.Text;
 
 namespace PYBS.Entity.Concrete
 {
-  public class TrainingStatus:ITable
-  {
-    public int Id { get; set; }
-    public int Name { get; set; }
-  }
+    public class TrainingStatus : ITable
+    {
+        public int Id { get; set; }
+        public int Name { get; set; }
+    }
 }
