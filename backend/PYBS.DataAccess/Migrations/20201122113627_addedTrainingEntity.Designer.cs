@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PYBS.DataAccess.Concrete.EntityFrameworkCore.Context;
 
 namespace PYBS.DataAccess.Migrations
 {
     [DbContext(typeof(PYBSContext))]
-    partial class PYBSContextModelSnapshot : ModelSnapshot
+    [Migration("20201122113627_addedTrainingEntity")]
+    partial class addedTrainingEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,72 +50,61 @@ namespace PYBS.DataAccess.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("BCWC")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Birthday")
+                    b.Property<DateTime>("Birtday")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("BloodTypeId")
+                    b.Property<int>("BloodTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("BonusCode")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ChildCount")
+                    b.Property<int>("ChildCount")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Department")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DistrictId")
+                    b.Property<int>("DistrictId")
                         .HasColumnType("int");
 
                     b.Property<string>("Division")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Duty")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmployerCompany")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("GenderId")
+                    b.Property<int>("GenderId")
                         .HasColumnType("int");
 
                     b.Property<string>("Graduation")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GraduationDepartment")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdentityNumber")
-                        .HasColumnType("nvarchar(11)")
-                        .HasMaxLength(11);
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("IsWorking")
+                    b.Property<bool>("IsWorking")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("MaritalStatusId")
+                    b.Property<int>("MaritalStatusId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -121,30 +112,27 @@ namespace PYBS.DataAccess.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("PersonnelNumber")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(11)")
-                        .HasMaxLength(11);
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProvinceId")
+                    b.Property<int>("ProvinceId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("SGKFirstEntry")
+                    b.Property<DateTime>("SGKFirstEntry")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("StartingDateOfEmployment")
+                    b.Property<DateTime>("StartingDateOfEmployment")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Status")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Username")
@@ -200,14 +188,10 @@ namespace PYBS.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -219,14 +203,10 @@ namespace PYBS.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProvinceId")
                         .HasColumnType("int");
@@ -243,93 +223,14 @@ namespace PYBS.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Genders");
-                });
-
-            modelBuilder.Entity("PYBS.Entity.Concrete.LeaveRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("LeaveFinishDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("LeaveStartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("LeaveStatusId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LeaveTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("LeaveStatusId");
-
-                    b.HasIndex("LeaveTypeId");
-
-                    b.ToTable("LeaveRequests");
-                });
-
-            modelBuilder.Entity("PYBS.Entity.Concrete.LeaveStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LeaveStatuses");
-                });
-
-            modelBuilder.Entity("PYBS.Entity.Concrete.LeaveType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool?>("IsPaid")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LeaveName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LeaveTypes");
                 });
 
             modelBuilder.Entity("PYBS.Entity.Concrete.MaritalStatus", b =>
@@ -337,14 +238,10 @@ namespace PYBS.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -356,14 +253,10 @@ namespace PYBS.DataAccess.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -454,25 +347,33 @@ namespace PYBS.DataAccess.Migrations
                 {
                     b.HasOne("PYBS.Entity.Concrete.BloodType", "BloodType")
                         .WithMany("AppUsers")
-                        .HasForeignKey("BloodTypeId");
+                        .HasForeignKey("BloodTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PYBS.Entity.Concrete.District", "District")
                         .WithMany("AppUsers")
                         .HasForeignKey("DistrictId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("PYBS.Entity.Concrete.Gender", "Gender")
                         .WithMany("AppUsers")
-                        .HasForeignKey("GenderId");
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PYBS.Entity.Concrete.MaritalStatus", "MaritalStatus")
                         .WithMany("AppUsers")
-                        .HasForeignKey("MaritalStatusId");
+                        .HasForeignKey("MaritalStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PYBS.Entity.Concrete.Province", "Province")
                         .WithMany("AppUsers")
                         .HasForeignKey("ProvinceId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PYBS.Entity.Concrete.AppUserRole", b =>
@@ -495,23 +396,8 @@ namespace PYBS.DataAccess.Migrations
                     b.HasOne("PYBS.Entity.Concrete.Province", "Province")
                         .WithMany("Districts")
                         .HasForeignKey("ProvinceId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("PYBS.Entity.Concrete.LeaveRequest", b =>
-                {
-                    b.HasOne("PYBS.Entity.Concrete.AppUser", "AppUser")
-                        .WithMany("LeaveRequests")
-                        .HasForeignKey("AppUserId");
-
-                    b.HasOne("PYBS.Entity.Concrete.LeaveStatus", "LeaveStatus")
-                        .WithMany("LeaveRequests")
-                        .HasForeignKey("LeaveStatusId");
-
-                    b.HasOne("PYBS.Entity.Concrete.LeaveType", "LeaveType")
-                        .WithMany("LeaveRequests")
-                        .HasForeignKey("LeaveTypeId");
                 });
 #pragma warning restore 612, 618
         }
