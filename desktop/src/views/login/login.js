@@ -1,21 +1,41 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { withRouter } from 'react-router-dom'
 import { CButton, CCard, CCardBody, CCol, CContainer, CForm, CInput, CInputGroup, CInputGroupPrepend, CInputGroupText, CRow } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import auth from '../../base/auth'
+import api, { handleGetAsync } from '../../base/api'
+import { UserDispatchContext } from '../../contexts/UserContext'
+import { ToastDispatchContext } from '../../contexts/ToastContext'
 
 const Login = props => {
-  console.log(props)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const userDispatch = useContext(UserDispatchContext)
+  const toastDispatch = useContext(ToastDispatchContext)
+
+  const fetchUserInfo = () => {
+    handleGetAsync(
+      api,
+      '/api/auth/activeuser',
+      res => {
+        userDispatch(res.data)
+      },
+      toastDispatch
+    )
+  }
+
   const onSubmit = e => {
     e.preventDefault()
-    auth.login(username, password, err => {
-      if (!err) {
-        props.history.push('/pannel')
-      }
+    if (!username || !password) {
+      toastDispatch({ type: 'error', message: 'Lütfen tüm alanları doldurunuz' })
+      return
+    }
+    auth.login(username, password, toastDispatch, () => {
+      fetchUserInfo()
+      props.history.push('/pannel')
     })
   }
+
   return (
     <div className='c-app c-default-layout flex-row align-items-center'>
       <CContainer>

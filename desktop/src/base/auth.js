@@ -1,24 +1,36 @@
-import api, { addTokenToHeader } from './api'
+import api, { addTokenToHeader, removeAuthToken, handleGetAsync, handlePostAsync } from './api'
 
 class Auth {
   constructor() {
-    // const token = this.getToken()
-    // if (token) {
-    //   this.authenticated = true
-    // } else {
-    // }
+    if (this.getToken()) this.removeToken()
     this.authenticated = false
   }
 
-  login(username, password, callback) {
-    this.authenticated = true
-    callback()
+  login(username, password, toastDispatch, callback) {
+    handlePostAsync(
+      api,
+      '/api/auth/login',
+      {
+        username,
+        password
+      },
+      res => {
+        addTokenToHeader(res.data.token, api)
+        callback()
+      },
+      res => {
+        if (res.status == 400) {
+          toastDispatch({ type: 'warning', message: 'Yanlış kullanıcı adı veya şifre' })
+        }
+      }
+    )
     // api
-    //   .post('', {
+    //   .post('/api/auth/login', {
     //     username,
-    //     password,
+    //     password
     //   })
-    //   .then(resp => {
+    //   .then(res => {
+    //     addTokenToHeader(res.data.token, api)
     //     callback()
     //   })
     //   .catch(err => {
@@ -38,12 +50,12 @@ class Auth {
 
   logout() {
     this.authenticated = false
-    //this.removeToken()
+    this.removeToken()
+    removeAuthToken(api)
   }
 
   isAuthenticated() {
     return this.authenticated
-    //return this.authenticated && this.getToken()
   }
 
   setToken(token) {
