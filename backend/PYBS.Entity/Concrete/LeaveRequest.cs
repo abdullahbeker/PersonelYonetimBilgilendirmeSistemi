@@ -10,13 +10,13 @@ namespace PYBS.Entity.Concrete
     public int Id { get; set; }
     public int UserId { get; set; }
     public AppUser AppUser { get; set; }
-    public int LeaveTypeId { get; set; }
-    public LeaveType LeaveType { get; set; }
-    public int LeaveStatusId { get; set; }
-    public LeaveStatus LeaveStatus { get; set; }
+    public int? LeaveTypeId { get; set; }
+    public LeaveType? LeaveType { get; set; }
+    public int? LeaveStatusId { get; set; }
+    public LeaveStatus? LeaveStatus { get; set; }
     public DateTime LeaveStartDate { get; set; }
     public DateTime LeaveFinishDate { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public DateTime UpdatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
   }
 }

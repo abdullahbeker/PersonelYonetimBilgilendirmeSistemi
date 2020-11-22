@@ -11,7 +11,9 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=localhost;database=PYBSDb;integrated security=true");
+            //optionsBuilder.UseSqlServer("server=localhost;database=PYBSDb;integrated security=true");
+            //Azure
+            optionsBuilder.UseSqlServer("server=pybs.database.windows.net;database=PYBSDb;User Id=pybs;password=7URgfuyFVAN4ZEzR");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
