@@ -63,7 +63,7 @@ namespace PYBS.WebAPI.Controllers
 
             await _appUserService.Add(_mapper.Map<AppUser>(appUserAddDto));
 
-            var user = _appUserService.FindByUsername(appUserAddDto.Username);
+            var user = await _appUserService.FindByUsername(appUserAddDto.Username);
             var role = await appRoleService.FindByName(RoleInfo.Member);
 
             await appUserRoleService.Add(new AppUserRole
@@ -71,7 +71,7 @@ namespace PYBS.WebAPI.Controllers
                 AppRoleId = role.Id,
                 AppUserId = user.Id
             });
-            return Created("", appUserAddDto);
+            return Created("", true);
         }
 
         [HttpGet("[action]")]

@@ -15,7 +15,7 @@ namespace PYBS.Business.Concrete
         {
             _genericDal = genericDal;
         }
-
+        
         public async Task<AppRole> FindByName(string roleName)
         {
             return await _genericDal.GetByFilter(x => x.Name == roleName);

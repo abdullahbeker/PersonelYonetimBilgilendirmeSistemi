@@ -10,7 +10,9 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=localhost;database=PYBSDb;integrated security=true");
+            //optionsBuilder.UseSqlServer("server=localhost;database=PYBSDb;integrated security=true");
+            //Azure
+            optionsBuilder.UseSqlServer("server=pybs.database.windows.net;database=PYBSDb;User Id=pybs;password=7URgfuyFVAN4ZEzR");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,10 +36,13 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
         public DbSet<Gender> Genders { get; set; }
         public DbSet<MaritalStatus> MaritalStatuses { get; set; }
         public DbSet<Province> Provinces { get; set; }
+        public DbSet<LeaveType> LeaveTypes { get; set; }
+        public DbSet<LeaveStatus> LeaveStatuses { get; set; }
+        public DbSet<LeaveRequest> LeaveRequests { get; set; }
         public DbSet<Training> Trainings { get; set; }
         public DbSet<TrainingPersonnel> TrainingPersonnels { get; set; }
         public DbSet<TrainingStatus> TrainingStatuses { get; set; }
 
 
-    }
+  }
 }

@@ -9,9 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PYBS.DataAccess", "PYBS.Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PYBS.Business", "PYBS.Business\PYBS.Business.csproj", "{64E829C7-1971-49A9-BE84-4651CA88F053}"
 EndProject
+
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PYBS.Core", "PYBS.Core\PYBS.Core.csproj", "{D1A66938-C302-4085-998F-C9DB4798F6D6}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PYBS.WebAPI", "PYBS.WebAPI\PYBS.WebAPI.csproj", "{1799E137-C617-4039-9AD7-F877080D52E1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{40ECFA0D-D0C3-461E-91F8-481F02BF7E75}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6CE5B213-6214-4EB6-9D10-6F85DAA0F1F1}"
+
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
