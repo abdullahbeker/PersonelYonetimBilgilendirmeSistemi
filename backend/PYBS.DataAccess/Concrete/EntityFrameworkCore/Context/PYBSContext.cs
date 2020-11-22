@@ -20,6 +20,11 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
             modelBuilder.ApplyConfiguration(new TrainingMap());
             modelBuilder.ApplyConfiguration(new TrainingPersonnelMap());
             modelBuilder.ApplyConfiguration(new TrainingStatusMap());
+            modelBuilder.ApplyConfiguration(new BloodTypeMap());
+            modelBuilder.ApplyConfiguration(new DistrictMap());
+            modelBuilder.ApplyConfiguration(new GenderMap());
+            modelBuilder.ApplyConfiguration(new MaritalStatusMap());
+            modelBuilder.ApplyConfiguration(new ProvinceMap());
         }
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<AppRole> AppRoles { get; set; }
