@@ -1,10 +1,10 @@
-using PYBS.DataAccess.Abstract;
-using PYBS.Entity.Concrete;
+using PYBS.DataAccess.Abstract.TrainingDals;
+using PYBS.Entity.Concrete.TrainingEntities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Repositories
+namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Repositories.TrainingRepositories
 {
   public class EfTrainingPersonnelRepository:EfGenericRepository<TrainingPersonnel>,ITrainingPersonnelDal
   {

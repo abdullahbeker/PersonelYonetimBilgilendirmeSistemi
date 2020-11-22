@@ -1,4 +1,4 @@
-﻿using PYBS.Entity.Concrete;
+﻿using PYBS.Entity.Concrete.TrainingEntities;
 using System;
 using System.Collections.Generic;
 using System.Text;

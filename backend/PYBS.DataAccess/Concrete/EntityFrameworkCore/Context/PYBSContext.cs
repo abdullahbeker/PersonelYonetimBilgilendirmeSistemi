@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using PYBS.DataAccess.Concrete.EntityFrameworkCore.Mapping;
+using PYBS.DataAccess.Concrete.EntityFrameworkCore.Mapping.TrainingMaps;
 using PYBS.Entity.Concrete;
+using PYBS.Entity.Concrete.TrainingEntities;
 
 namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
 {

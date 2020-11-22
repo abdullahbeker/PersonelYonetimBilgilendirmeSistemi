@@ -1,18 +1,45 @@
 ﻿using PYBS.Business.Abstract.TrainingService;
-using PYBS.DataAccess.Abstract;
-using PYBS.Entity.Concrete;
+using PYBS.DataAccess.Abstract.TrainingDals;
+using PYBS.Entity.Concrete.TrainingEntities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PYBS.Business.Concrete.TrainingManager
 {
-    public class TrainingPersonnelManager : GenericManager<TrainingPersonnel>, ITrainingPersonnelService
+    public class TrainingPersonnelManager : ITrainingPersonnelService
     {
-        private readonly IGenericDal<TrainingPersonnel> _genericDal;
-        public TrainingPersonnelManager(IGenericDal<TrainingPersonnel> genericDal) : base(genericDal)
+        private ITrainingPersonnelDal _trainingPersonnelDal;
+
+        public TrainingPersonnelManager(ITrainingPersonnelDal trainingPersonnelDal)
         {
-            _genericDal = genericDal;
+            _trainingPersonnelDal = trainingPersonnelDal;
+        }
+
+        public async Task Add(TrainingPersonnel entity)
+        {
+            await _trainingPersonnelDal.Add(entity);
+        }
+
+        public async Task Delete(TrainingPersonnel entity)
+        {
+            await _trainingPersonnelDal.Delete(entity);
+        }
+
+        public async Task<List<TrainingPersonnel>> GetAll()
+        {
+            return await _trainingPersonnelDal.GetAll();
+        }
+
+        public async Task<TrainingPersonnel> GetById(int id)
+        {
+            return await _trainingPersonnelDal.GetById(id);
+        }
+
+        public async Task Update(TrainingPersonnel entity)
+        {
+            await _trainingPersonnelDal.Update(entity);
         }
     }
 }

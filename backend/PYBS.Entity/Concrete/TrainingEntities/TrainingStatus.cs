@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PYBS.Entity.Concrete
+namespace PYBS.Entity.Concrete.TrainingEntities
 {
     public class TrainingStatus : ITable
     {
