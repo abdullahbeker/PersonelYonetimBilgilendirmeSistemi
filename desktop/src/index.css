@@ -1,13 +1,12 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import '../node_modules/@coreui/coreui/dist/css/coreui.min.css'; /* coreui template css */
+
+/* template style fixes */
+
+.c-sidebar.c-sidebar-light .c-sidebar-brand {
+  background: transparent;
+  border-top: 1px solid rgba(0, 0, 21, 0.2);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.c-header {
+  border-top: 1px solid rgba(0, 0, 21, 0.2);
 }

@@ -10,12 +10,18 @@
   "main": "public/electron.js",
   "homepage": "./",
   "dependencies": {
+    "@coreui/coreui": "^3.2.2",
+    "@coreui/icons": "2.0.0-beta.4",
+    "@coreui/icons-react": "^1.0.1",
+    "@coreui/react": "^3.0.3",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.1",
     "@testing-library/user-event": "^12.2.2",
+    "axios": "^0.21.0",
     "electron-is-dev": "^1.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "web-vitals": "^0.2.4"
   },
@@ -55,10 +61,12 @@
     "wait-on": "^5.2.0"
   },
   "prettier": {
-    "tabWidth": 2,
     "singleQuote": true,
     "jsxSingleQuote": true,
     "jsxBracketSameLine": true,
-    "semi": false
+    "semi": false,
+    "arrowParens": "avoid",
+    "tabWidth": 2,
+    "printWidth": 150
   }
 }

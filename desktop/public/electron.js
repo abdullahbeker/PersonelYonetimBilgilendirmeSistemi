@@ -15,7 +15,6 @@ app.on('ready', () => {
     minWidth: 1000,
     minHeight: 700,
   })
-  console.log('isDev: ' + isDev)
   mainWindow.maximize()
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`)
 })
