@@ -1,6 +1,7 @@
-﻿using AutoMapper;
+using AutoMapper;
 using PYBS.Entity.Concrete;
 using PYBS.Entity.Dtos.AppUserDtos;
+using PYBS.Entity.Dtos.LeaveDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,9 @@ namespace PYBS.WebAPI.Mapping.AutoMapper
         {
             CreateMap<AppUserAddDto, AppUser>();
             CreateMap<AppUser, AppUserAddDto>();
+
+            CreateMap<LeaveTypeAddDto, LeaveType>();
+            CreateMap<LeaveType, LeaveTypeAddDto>();
         }
     }
 }

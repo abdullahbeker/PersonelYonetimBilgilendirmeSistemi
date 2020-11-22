@@ -32,7 +32,10 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
         public DbSet<Gender> Genders { get; set; }
         public DbSet<MaritalStatus> MaritalStatuses { get; set; }
         public DbSet<Province> Provinces { get; set; }
+        public DbSet<LeaveType> LeaveTypes { get; set; }
+        public DbSet<LeaveStatus> LeaveStatuses { get; set; }
+        public DbSet<LeaveRequest> LeaveRequests { get; set; }
 
 
-    }
+  }
 }

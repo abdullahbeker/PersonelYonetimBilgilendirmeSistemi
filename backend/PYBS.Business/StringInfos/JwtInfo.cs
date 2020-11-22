@@ -8,7 +8,7 @@ namespace PYBS.Business.StringInfos
     {
         public const string Issuer = "http://localhost";
         public const string Audience = "http://localhost";
-        public const string SecurityKey = "pybstest";
+        public const string SecurityKey = "pybstestpybstest";
         public const double TokenExpiration = 30;
     }
 }
