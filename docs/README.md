@@ -127,6 +127,18 @@ class LeaveType{
     bool IsPaid;
 }
 
+class LeaveDeserve{
+    int Id;
+    bool IsLimitless;
+}
+
+/*
+    Ücretli Yıllık izin
+    Yıllık (Sınırlı)
+    Yıllık olduğu için her yıl ${14}
+    Devir eden
+*/
+
 class LeaveRequest{
     int Id;
     int UserId;
