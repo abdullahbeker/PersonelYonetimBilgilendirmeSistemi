@@ -2,13 +2,40 @@
 
 ## Pages
 
-- Kullanıcı Giriş Sayfası
-- Anasayfa
-  - İzin Sayfası
-    - k
+- **Authentication & Authorization**
+  - Kullanıcı ekleme
+  - Kullanıcı silme
+  - Giriş yapma
+    - **`[GET] /auth/login`**
+  - Aktif kullanıcı
+    - **`[GET] /auth/active-user`**
+- **Modüller**
+  - İzin Modülü
+    - ### Desktop :computer:
+      - İzin tiplerini listeleme 
+        - **`[GET] /leave-type`**
+      - İzin tipi oluşturma 
+        - **`[POST] /leave-type`**
+      - İzin tipi detay
+        - **`[GET] /leave-type/:id`**
+        - **`[DELETE] /leave-type/:id`**
+      - İzin tipi düzenleme
+        - **`[PUT] /leave-type/:id`**
+      ---
+      - İzin taleplerini listeleme
+        - **`[GET] /leave-request`**
+      - İzin talep detay
+        - **`[GET] /leave-request/detail/:id`**
+        - **`[POST] /leave-request/status`**
+    - ### Mobile :iphone:
+      - İzin talebi oluşturma
+        - **`[POST] /leave-request`**
+      - İzin taleplerimi görüntüle
+        - **`[GET] /leave-request-list/:personnelId`**
+      - İzin talebi detay
+        - **`[GET] /leave-request/:requestId`**
+        - **`[DELETE] /leave-request/:requestId`**
   - Eğitim Sayfası
   - Zimmet Sayfası
   - Duyuru Sayfası
   - Borç & Talep Sayfası
-- Profil Sayfası
-- Ayarlar Sayfası
