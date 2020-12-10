@@ -26,7 +26,7 @@ class UserRole {
 }
 
 class Account {
-    string Username;
+    string EmailAddress;
     string Password;
 }
 
@@ -122,7 +122,7 @@ class User {
 ```csharp
 class LeaveType{
     int Id;
-    string LeaveName;
+    string LeaveTypeName;
     string Description;
     bool IsPaid;
     //int LimitTypeId;
