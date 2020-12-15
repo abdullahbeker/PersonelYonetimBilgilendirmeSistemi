@@ -6,52 +6,33 @@ class Auth {
     this.authenticated = false
   }
 
-  login(username, password, toastDispatch, callback) {
+  login(username, password, toastDispatch, successCallback, errorCallback) {
     handlePostAsync(
       api,
-      '/api/auth/login',
+      '/api/auth/signin',
       {
         username,
         password
       },
       res => {
         addTokenToHeader(res.data.token, api)
-        callback()
+        this.authenticated = true
+        if (successCallback) successCallback()
       },
+      toastDispatch,
       res => {
         if (res.status == 400) {
           toastDispatch({ type: 'warning', message: 'Yanlış kullanıcı adı veya şifre' })
+          if (errorCallback) errorCallback(res)
         }
       }
     )
-    // api
-    //   .post('/api/auth/login', {
-    //     username,
-    //     password
-    //   })
-    //   .then(res => {
-    //     addTokenToHeader(res.data.token, api)
-    //     callback()
-    //   })
-    //   .catch(err => {
-    //     if (err.response) {
-    //       if (err.response.status == 400) {
-    //         callback('Yanlış kullanıcı adı veya şifre')
-    //       } else {
-    //         callback('Sunucularımızda bir hata oluştu, lütfen daha sonra tekrar deneyin')
-    //       }
-    //     } else if (err.request) {
-    //       callback('Sunucularımıza ulaşamıyoruz, lütfen daha sonra tekrar deneyin')
-    //     } else {
-    //       callback('Bir hata oluştu, lütfen tekrar deneyin')
-    //     }
-    //   })
   }
 
   logout() {
-    this.authenticated = false
     this.removeToken()
     removeAuthToken(api)
+    this.authenticated = false
   }
 
   isAuthenticated() {

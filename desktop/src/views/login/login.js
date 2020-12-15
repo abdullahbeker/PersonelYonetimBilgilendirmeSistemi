@@ -1,28 +1,28 @@
 import React, { useState, useContext } from 'react'
 import { withRouter } from 'react-router-dom'
-import { CButton, CCard, CCardBody, CCol, CContainer, CForm, CInput, CInputGroup, CInputGroupPrepend, CInputGroupText, CRow } from '@coreui/react'
+import {
+  CButton,
+  CSpinner,
+  CCard,
+  CCardBody,
+  CCol,
+  CContainer,
+  CForm,
+  CInput,
+  CInputGroup,
+  CInputGroupPrepend,
+  CInputGroupText,
+  CRow
+} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import auth from '../../base/auth'
-import api, { handleGetAsync } from '../../base/api'
-import { UserDispatchContext } from '../../contexts/UserContext'
 import { ToastDispatchContext } from '../../contexts/ToastContext'
 
 const Login = props => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const userDispatch = useContext(UserDispatchContext)
+  const [isInputDisable, setIsInputDisable] = useState(false)
   const toastDispatch = useContext(ToastDispatchContext)
-
-  const fetchUserInfo = () => {
-    handleGetAsync(
-      api,
-      '/api/auth/activeuser',
-      res => {
-        userDispatch(res.data)
-      },
-      toastDispatch
-    )
-  }
 
   const onSubmit = e => {
     e.preventDefault()
@@ -30,10 +30,18 @@ const Login = props => {
       toastDispatch({ type: 'error', message: 'Lütfen tüm alanları doldurunuz' })
       return
     }
-    auth.login(username, password, toastDispatch, () => {
-      fetchUserInfo()
-      props.history.push('/pannel')
-    })
+    setIsInputDisable(true)
+    auth.login(
+      username,
+      password,
+      toastDispatch,
+      () => {
+        props.history.push('/pannel')
+      },
+      () => {
+        setIsInputDisable(false)
+      }
+    )
   }
 
   return (
@@ -44,7 +52,7 @@ const Login = props => {
             <CCard className='p-4'>
               <CCardBody>
                 <CForm>
-                  <h1>Boneo</h1>
+                  <h1>PYBS</h1>
                   <p className='text-muted'>Hesabınıza giriş yapın</p>
                   <CInputGroup className='mb-3'>
                     <CInputGroupPrepend>
@@ -53,10 +61,12 @@ const Login = props => {
                       </CInputGroupText>
                     </CInputGroupPrepend>
                     <CInput
+                      disabled={isInputDisable}
                       type='text'
-                      placeholder='Kullanıcı Adı'
+                      placeholder='Kimlik Numarası'
                       autoComplete='none'
                       value={username}
+                      maxLength={11}
                       onChange={e => setUsername(e.target.value)}
                     />
                   </CInputGroup>
@@ -66,19 +76,21 @@ const Login = props => {
                         <CIcon name='cil-lock-locked' />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type='password' placeholder='Şifre' autoComplete='none' value={password} onChange={e => setPassword(e.target.value)} />
+                    <CInput
+                      disabled={isInputDisable}
+                      type='password'
+                      placeholder='Şifre'
+                      autoComplete='none'
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
+                    />
                   </CInputGroup>
                   <CRow>
                     <CCol xs='12'>
-                      <CButton color='primary' className='px-4' onClick={onSubmit}>
-                        Giriş Yap
+                      <CButton color='primary' className='px-4' onClick={onSubmit} disabled={isInputDisable}>
+                        {isInputDisable ? <CSpinner color='#fff' size='sm' /> : 'Giriş Yap'}
                       </CButton>
                     </CCol>
-                    {/* <CCol xs="6" className="text-right">
-                      <CButton color="link" className="px-0">
-                        Forgot password?
-                      </CButton>
-                    </CCol> */}
                   </CRow>
                 </CForm>
               </CCardBody>

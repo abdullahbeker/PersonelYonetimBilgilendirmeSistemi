@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const addTokenToHeader = (token, instance) => {
-  instance.defaults.headers.common['Authorization'] = token
+  instance.defaults.headers.common['Authorization'] = `Bearer ${token}`
 }
 
 export const removeAuthToken = instance => {
