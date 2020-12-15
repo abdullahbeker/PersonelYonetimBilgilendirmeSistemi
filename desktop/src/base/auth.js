@@ -1,49 +1,42 @@
-import api, { addTokenToHeader } from './api'
+import api, { addTokenToHeader, removeAuthToken, handleGetAsync, handlePostAsync } from './api'
 
 class Auth {
   constructor() {
-    // const token = this.getToken()
-    // if (token) {
-    //   this.authenticated = true
-    // } else {
-    // }
+    if (this.getToken()) this.removeToken()
     this.authenticated = false
   }
 
-  login(username, password, callback) {
-    this.authenticated = true
-    callback()
-    // api
-    //   .post('', {
-    //     username,
-    //     password,
-    //   })
-    //   .then(resp => {
-    //     callback()
-    //   })
-    //   .catch(err => {
-    //     if (err.response) {
-    //       if (err.response.status == 400) {
-    //         callback('Yanlış kullanıcı adı veya şifre')
-    //       } else {
-    //         callback('Sunucularımızda bir hata oluştu, lütfen daha sonra tekrar deneyin')
-    //       }
-    //     } else if (err.request) {
-    //       callback('Sunucularımıza ulaşamıyoruz, lütfen daha sonra tekrar deneyin')
-    //     } else {
-    //       callback('Bir hata oluştu, lütfen tekrar deneyin')
-    //     }
-    //   })
+  login(username, password, toastDispatch, successCallback, errorCallback) {
+    handlePostAsync(
+      api,
+      '/api/auth/signin',
+      {
+        username,
+        password
+      },
+      res => {
+        addTokenToHeader(res.data.token, api)
+        this.authenticated = true
+        if (successCallback) successCallback()
+      },
+      toastDispatch,
+      res => {
+        if (res.status == 400) {
+          toastDispatch({ type: 'warning', message: 'Yanlış kullanıcı adı veya şifre' })
+          if (errorCallback) errorCallback(res)
+        }
+      }
+    )
   }
 
   logout() {
+    this.removeToken()
+    removeAuthToken(api)
     this.authenticated = false
-    //this.removeToken()
   }
 
   isAuthenticated() {
     return this.authenticated
-    //return this.authenticated && this.getToken()
   }
 
   setToken(token) {
