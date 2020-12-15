@@ -26,7 +26,7 @@ class UserRole {
 }
 
 class Account {
-    string Username;
+    string EmailAddress;
     string Password;
 }
 
@@ -108,9 +108,8 @@ class User {
 
 ### İzin (Leave)
 
-- Ücretli ve ücretsiz olmak üzere iki tip izin vardır
-- Yetkili kişi izin türlerini belirler
-- Personel belli bir türden ve süreden izin talep eder
+- Yetkili kişi izin tipleri oluşturur.
+- Personel belli bir tipten ve süreden izin talep eder
 - Yetkili talep edilen izinleri görüntüleyebilir, onaylayabilir veya reddedebilir
 
 #### Sayfalar
@@ -123,10 +122,53 @@ class User {
 ```csharp
 class LeaveType{
     int Id;
-    string LeaveName;
+    string LeaveTypeName;
+    string Description;
     bool IsPaid;
+    //int LimitTypeId;
+    //limittypebased ↓
+    string LimitName;
+    int? Day;
+    int? OverdrawnBalanceTypeId; // eksi bakiye
+    int? AccrualFrequencyTypeId; // hak ediş sıklıgı
+    int? StartDateTypeId; 
+    int? CarryOverId; // devretme
+    //int? SeniorityRightTypeId; // kıdem
+    int? AtLeastDay;
+    int? AtMostDay;
+    int? WaitingPeriodMonth;
 }
 
+class OverdrawnBalance{ // eksi bakiye var-yok
+    int Id;
+    string Name;
+    bool IsOverdrawn;
+}
+class AccrualFrequency{ // günlük, aylık, yıllık
+    int Id;
+    string Name;
+    int Day;
+}
+class StartDate{ // işe başladığı zaman, yıl başı vs.
+    int Id;
+    string Name;
+    DateTime? Date;
+}
+class CarryOver{ // kalan izin devretme
+    int Id;
+    string Name;
+    bool IsCarryOver;
+}
+class SeniorityRight{ // Fazladan izin kazanma durumu
+    int Id;
+    int SeniorityYear;
+    int AdditionalDays; 
+}
+class SeniorityRightLeaveTypes{
+    int SeniorityRightId;
+    int LeaveTypeId;
+}
+//
 class LeaveRequest{
     int Id;
     int UserId;
