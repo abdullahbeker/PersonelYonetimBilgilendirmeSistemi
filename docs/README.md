@@ -3,7 +3,7 @@
 ## Modüller
 
 - [Profil (Profile)](https://github.com/abdullahbeker/PersonelYonetimBilgilendirmeSistemi
-/tree/LeaveModule/docs/ProfileModule.md)
+/blob/LeaveModule/docs/ProfileModule.md)
 - [İzin (Leave)](https://github.com/abdullahbeker/PersonelYonetimBilgilendirmeSistemi
 /tree/main/docs/LeaveModule.md)
 - Duyuru
