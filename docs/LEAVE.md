@@ -1,4 +1,0 @@
-# Yıllık İzin (Leave)
-
-## Yapılacaklar
-- 
