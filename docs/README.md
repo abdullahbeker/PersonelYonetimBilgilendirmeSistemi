@@ -8,3 +8,4 @@
 - [Eğitim (Training)](https://github.com/abdullahbeker/PersonelYonetimBilgilendirmeSistemi/tree/main/docs/TrainingModule.md)
 - [Zimmet (Asset)](https://github.com/abdullahbeker/PersonelYonetimBilgilendirmeSistemi/tree/main/docs/AssetModule.md)
 - Borç & Talep
+- [Endpoints](https://github.com/abdullahbeker/PersonelYonetimBilgilendirmeSistemi/tree/main/docs/ENDPOINTS.md)
