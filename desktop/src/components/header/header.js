@@ -50,6 +50,7 @@ const Header = () => {
         {'ABDULLAH BEKER'}
         <HeaderDropdown />
       </CHeaderNav>
+
     </CHeader>
   )
 }

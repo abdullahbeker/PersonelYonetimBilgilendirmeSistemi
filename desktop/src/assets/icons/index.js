@@ -10,7 +10,8 @@ import {
   cilSettings,
   cilSpeedometer,
   cilUser,
-  cilLockLocked
+  cilLockLocked,
+  cilPaperPlane,
 } from '@coreui/icons'
 
 export const icons = {
@@ -25,5 +26,6 @@ export const icons = {
   cilSettings,
   cilSpeedometer,
   cilUser,
-  cilLockLocked
+  cilLockLocked,
+  cilPaperPlane,
 }

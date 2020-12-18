@@ -1,5 +1,4 @@
-import React, { createContext, useState } from 'react'
-
+import React, { createContext, useReducer, useState } from 'react'
 const UserContext = createContext()
 const UserDispatchContext = createContext()
 
@@ -8,7 +7,6 @@ export default ({ children }) => {
     username: '',
     roles: []
   }
-
   const [state, setState] = useState(initialState)
   return (
     <UserContext.Provider value={state}>

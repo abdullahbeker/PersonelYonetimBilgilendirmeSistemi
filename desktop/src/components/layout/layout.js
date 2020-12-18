@@ -30,6 +30,7 @@ const Layout = ({ children }) => {
         <Header />
         <div className='c-body'>
           <main className='c-main'>
+
             <CContainer fluid>{children}</CContainer>
           </main>
         </div>
@@ -40,3 +41,4 @@ const Layout = ({ children }) => {
 }
 
 export default Layout
+

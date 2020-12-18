@@ -1,3 +1,4 @@
+
 import api, { addTokenToHeader, removeAuthToken, handleGetAsync, handlePostAsync } from './api'
 
 class Auth {

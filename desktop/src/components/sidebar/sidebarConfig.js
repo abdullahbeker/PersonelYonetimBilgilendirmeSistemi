@@ -1,25 +1,41 @@
 export default [
   {
-    _tag: "CSidebarNavItem",
-    name: "Panel",
-    to: "/pannel",
-    icon: "cil-speedometer",
+    _tag: 'CSidebarNavItem',
+    name: 'Panel',
+    to: '/pannel',
+    icon: 'cil-speedometer',
   },
   {
-    _tag: "CSidebarNavTitle",
-    _children: ["Sayfalar"],
+    _tag: 'CSidebarNavTitle',
+    _children: ['İzinler'],
   },
   {
-    _tag: "CSidebarNavItem",
-    name: "Anasayfa",
-    to: "/pages/home",
-    icon: "cil-home",
+    _tag: 'CSidebarNavItem',
+    name: 'İzinler',
+    to: '/leave',
+    icon: 'cil-paper-plane',
   },
   {
-    _tag: "CSidebarNavItem",
-    name: "Hakkımızda",
-    to: "/pages/aboutus",
-    icon: "cil-info",
+    _tag: 'CSidebarNavItem',
+    name: 'Personel İzinleri',
+    to: '/personnel-leaves',
+    icon: 'cil-happy',
+  },
+  {
+    _tag: 'CSidebarNavTitle',
+    _children: ['Sayfalar'],
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Anasayfa',
+    to: '/pages/home',
+    icon: 'cil-home',
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Hakkımızda',
+    to: '/pages/aboutus',
+    icon: 'cil-info',
   },
   // {
   //   _tag: "CSidebarNavItem",
@@ -104,3 +120,4 @@ export default [
     icon: "cil-playlist-add",
   },
 ];
+
