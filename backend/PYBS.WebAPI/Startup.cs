@@ -63,7 +63,7 @@ namespace PYBS.WebAPI
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().Build());
 
             app.UseEndpoints(endpoints =>
             {

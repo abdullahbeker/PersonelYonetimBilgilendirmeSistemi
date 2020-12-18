@@ -51,7 +51,7 @@ const HeaderDropdown = props => {
           </CBadge>
         </CDropdownItem> */}
         <CDropdownItem header tag='div' color='light' className='text-center'>
-          <strong>Settings</strong>
+          <strong>Kullanıcı Menüsü</strong>
         </CDropdownItem>
         <CDropdownItem>
           <CIcon name='cil-user' className='mfe-2' />
