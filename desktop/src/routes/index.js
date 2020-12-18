@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Loading, SecuredRoute, Layout } from '../components'
-import { Login, NotFound, Pannel } from '../views'
+import { Login, NotFound, Pannel, LeaveIndex, LeaveDetail, PersonnelLeaveIndex } from '../views'
 
 const Routes = () => {
   return (
@@ -18,6 +18,15 @@ const Routes = () => {
               <Switch>
                 <Route path='/pannel' exact>
                   <Pannel />
+                </Route>
+                <Route path='/leave' exact>
+                  <LeaveIndex />
+                </Route>
+                <Route path='/leave-detail' exact>
+                  <LeaveDetail />
+                </Route>
+                <Route path='/personnel-leaves' exact>
+                  <PersonnelLeaveIndex />
                 </Route>
                 <Route path='*'>
                   <NotFound />

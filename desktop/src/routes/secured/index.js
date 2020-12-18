@@ -1,8 +1,8 @@
-import React, { Suspense } from "react";
-import { Switch, Redirect, Route } from "react-router-dom";
-import { SecuredRoute, Layout, Loading } from "../../components";
-import { Pannel } from "../../views/pannel";
-import { CFade } from "@coreui/react";
+import React, { Suspense } from 'react'
+import { Switch, Redirect, Route } from 'react-router-dom'
+import { SecuredRoute, Layout, Loading } from '../../components'
+import { Pannel } from '../../views/pannel'
+import { CFade } from '@coreui/react'
 
 export const SecuredRoutes = () => {
   return (
@@ -26,10 +26,10 @@ export const SecuredRoutes = () => {
               )
             );
           })} */}
-          <SecuredRoute path="/pannel" component={Pannel} exact />
-          <Redirect from="*" to="/pannel" />
+          <SecuredRoute path='/pannel' component={Pannel} exact />
+          <Redirect from='*' to='/pannel' />
         </Switch>
       </Suspense>
     </Layout>
-  );
-};
+  )
+}
