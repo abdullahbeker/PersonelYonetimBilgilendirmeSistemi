@@ -68,5 +68,20 @@ namespace PYBS.WebAPI.Controllers
                 return StatusCode(201,appUser);
             }
         }
+
+        [HttpGet]
+        [Route("personnels/:personnelId")]
+        public async Task<ActionResult> PersonnelDetails(int personnelId)
+        {
+            using (var context = new PYBSContext())
+            {
+                var appUser = await context.AppUsers.FirstOrDefaultAsync(x=>x.Id==personnelId);
+                if (appUser==null)
+                {
+                    return BadRequest();
+                }
+                return Ok(appUser);
+            }
+        }
     }
 }
