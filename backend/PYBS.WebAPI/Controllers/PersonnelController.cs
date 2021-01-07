@@ -75,12 +75,32 @@ namespace PYBS.WebAPI.Controllers
         {
             using (var context = new PYBSContext())
             {
-                var appUser = await context.AppUsers.FirstOrDefaultAsync(x=>x.Id==personnelId);
+                AppUser appUser = await context.AppUsers.FirstOrDefaultAsync(x=>x.Id==personnelId);
                 if (appUser==null)
                 {
                     return BadRequest();
                 }
                 return Ok(appUser);
+            }
+        }
+
+        [HttpDelete]
+        [Route("personnels/:personnelId")]
+        public async Task<ActionResult> PersonnelDelete(int personnelId)
+        {
+            using (var context = new PYBSContext())
+            {
+                AppUser appUser = await context.AppUsers.FirstOrDefaultAsync(x => x.Id == personnelId);
+                if (appUser == null)
+                {
+                    return BadRequest();
+                }
+                else
+                {
+                    context.AppUsers.Remove(appUser);
+                    await context.SaveChangesAsync();
+                }
+                return StatusCode(204);
             }
         }
     }
