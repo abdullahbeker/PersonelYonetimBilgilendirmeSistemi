@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PYBS.Entity.Concrete
 {
-    public class AppUser
+    public class AppUser : ITable
     {
         public int Id { get; set; }
         public string Username { get; set; }
