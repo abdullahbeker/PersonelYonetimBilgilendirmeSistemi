@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PYBS.DataAccess.Concrete.EntityFrameworkCore.Context;
@@ -15,10 +16,10 @@ namespace PYBS.WebAPI.Controllers
     [ApiController]
     public class PersonnelController : ControllerBase
     {
-
-        public PersonnelController()
+        private readonly IMapper _mapper;
+        public PersonnelController(IMapper mapper)
         {
-
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -101,6 +102,27 @@ namespace PYBS.WebAPI.Controllers
                     await context.SaveChangesAsync();
                 }
                 return StatusCode(204);
+            }
+        }
+
+        [HttpPut]
+        [Route("personnels/:personnelId")]
+        public async Task<ActionResult> PersonnelEdit(int personnelId,[FromBody]PersonnelEditModel model)
+        {
+            using (var context = new PYBSContext())
+            {
+                AppUser appUser = await context.AppUsers.FirstOrDefaultAsync(x => x.Id == personnelId);
+                if (appUser == null)
+                {
+                    return BadRequest();
+                }
+                else
+                {
+                    appUser = _mapper.Map<AppUser>(model);
+                    context.AppUsers.Update(appUser);
+                    await context.SaveChangesAsync();
+                }
+                return Ok(appUser);
             }
         }
     }
