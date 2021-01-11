@@ -30,7 +30,7 @@ namespace PYBS.WebAPI.Controllers
 
         [HttpPost("[action]")]
         //[ValidModel]
-        public async Task<IActionResult> SignIn([FromBody]AppUserLoginDto appUserLoginDto)
+        public async Task<IActionResult> SignIn([FromBody] AppUserLoginDto appUserLoginDto)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace PYBS.WebAPI.Controllers
 
         [HttpPost("[action]")]
         //[ValidModel]
-        public async Task<IActionResult> SignUp(AppUserAddDto appUserAddDto, [FromServices]IAppUserRoleService appUserRoleService, [FromServices] IAppRoleService appRoleService)
+        public async Task<IActionResult> SignUp(AppUserAddDto appUserAddDto, [FromServices] IAppUserRoleService appUserRoleService, [FromServices] IAppRoleService appRoleService)
         {
             var appUser = await _appUserService.FindByUsername(appUserAddDto.Username);
             if (appUser != null)
@@ -89,6 +89,9 @@ namespace PYBS.WebAPI.Controllers
             var roles = await _appUserService.GetRolesByUsername(User.Identity.Name);
             AppUserDto appUserDto = new AppUserDto()
             {
+                Id = user.Id,
+                Name = user.Name,
+                SurName = user.Surname,
                 Username = user.Username,
                 Roles = roles.Select(x => x.Name).ToList()
             };

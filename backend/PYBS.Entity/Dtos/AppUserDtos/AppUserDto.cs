@@ -6,7 +6,10 @@ namespace PYBS.Entity.Dtos.AppUserDtos
 {
     public class AppUserDto
     {
+        public int Id { get; set; }
         public string Username { get; set; }
+        public string Name { get; set; }
+        public string SurName { get; set; }
         public List<string> Roles { get; set; }
     }
 }
