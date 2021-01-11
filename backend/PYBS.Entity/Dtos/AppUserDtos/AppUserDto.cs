@@ -9,7 +9,7 @@ namespace PYBS.Entity.Dtos.AppUserDtos
         public int Id { get; set; }
         public string Username { get; set; }
         public string Name { get; set; }
-        public string SurName { get; set; }
+        public string Surname { get; set; }
         public List<string> Roles { get; set; }
     }
 }

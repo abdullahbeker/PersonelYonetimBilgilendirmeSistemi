@@ -91,7 +91,7 @@ namespace PYBS.WebAPI.Controllers
             {
                 Id = user.Id,
                 Name = user.Name,
-                SurName = user.Surname,
+                Surname = user.Surname,
                 Username = user.Username,
                 Roles = roles.Select(x => x.Name).ToList()
             };

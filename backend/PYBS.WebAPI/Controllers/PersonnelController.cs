@@ -30,6 +30,7 @@ namespace PYBS.WebAPI.Controllers
             {
                 List<PersonnelViewList> data = await context.AppUsers.Select(x => new PersonnelViewList
                 {
+                    Id = x.Id,
                     Department = x.Department,
                     Duty = x.Duty,
                     Name = x.Name,
@@ -40,9 +41,9 @@ namespace PYBS.WebAPI.Controllers
                 return Ok(data);
             }
         }
-        
+
         [HttpPost]
-        [Route("personnel")]
+        [Route("[action]")]
         public async Task<ActionResult> PersonnelAdd(PersonnelAddModel model)
         {
             using (var context = new PYBSContext())
@@ -66,18 +67,18 @@ namespace PYBS.WebAPI.Controllers
                 await context.AppUserRoles.AddAsync(role);
                 await context.SaveChangesAsync();
 
-                return StatusCode(201,appUser);
+                return StatusCode(201, appUser);
             }
         }
 
         [HttpGet]
-        [Route("personnels/:personnelId")]
+        [Route("[action]")]
         public async Task<ActionResult> PersonnelDetails(int personnelId)
         {
             using (var context = new PYBSContext())
             {
-                AppUser appUser = await context.AppUsers.FirstOrDefaultAsync(x=>x.Id==personnelId);
-                if (appUser==null)
+                AppUser appUser = await context.AppUsers.FirstOrDefaultAsync(x => x.Id == personnelId);
+                if (appUser == null)
                 {
                     return BadRequest();
                 }
@@ -86,7 +87,7 @@ namespace PYBS.WebAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("personnels/:personnelId")]
+        [Route("[action]")]
         public async Task<ActionResult> PersonnelDelete(int personnelId)
         {
             using (var context = new PYBSContext())
@@ -100,14 +101,14 @@ namespace PYBS.WebAPI.Controllers
                 {
                     context.AppUsers.Remove(appUser);
                     await context.SaveChangesAsync();
+                    return StatusCode(204);
                 }
-                return StatusCode(204);
             }
         }
 
         [HttpPut]
-        [Route("personnels/:personnelId")]
-        public async Task<ActionResult> PersonnelEdit(int personnelId,[FromBody]PersonnelEditModel model)
+        [Route("[action]")]
+        public async Task<ActionResult> PersonnelEdit(int personnelId, [FromBody] PersonnelEditModel model)
         {
             using (var context = new PYBSContext())
             {
