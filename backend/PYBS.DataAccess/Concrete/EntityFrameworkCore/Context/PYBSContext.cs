@@ -12,7 +12,7 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
         {
             //optionsBuilder.UseSqlServer("server=localhost;database=PYBSDb;integrated security=true");
             //Azure
-            optionsBuilder.UseSqlServer("server=.\\SQLEXPRESS;database=PYBSDb;integrated security=true");
+            optionsBuilder.UseSqlServer("server=erza-server.database.windows.net;database=erza;User Id=erza;Password=7URgfuyFVAN4ZEzR;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
