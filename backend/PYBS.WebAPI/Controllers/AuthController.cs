@@ -30,24 +30,31 @@ namespace PYBS.WebAPI.Controllers
 
         [HttpPost("[action]")]
         //[ValidModel]
-        public async Task<IActionResult> SignIn(AppUserLoginDto appUserLoginDto)
+        public async Task<IActionResult> SignIn([FromBody]AppUserLoginDto appUserLoginDto)
         {
-            var appUser = await _appUserService.FindByUsername(appUserLoginDto.Username);
-            if (appUser == null)
+            try
             {
-                return BadRequest("Kullanıcı adı veya şifre hatalı");
-            }
-            else
-            {
-                if (await _appUserService.CheckPassword(appUserLoginDto))
+                var appUser = await _appUserService.FindByUsername(appUserLoginDto.Username);
+                if (appUser == null)
                 {
-                    var roles = await _appUserService.GetRolesByUsername(appUserLoginDto.Username);
-                    var token = _jwtService.GenerateJwt(appUser, roles);
-                    JwtAccessToken jwtAccessToken = new JwtAccessToken();
-                    jwtAccessToken.Token = token;
-                    return Created("", jwtAccessToken);
+                    return BadRequest("Kullanıcı adı veya şifre hatalı");
                 }
-                return BadRequest("Kullanıcı adı veya şifre hatalı");
+                else
+                {
+                    if (await _appUserService.CheckPassword(appUserLoginDto))
+                    {
+                        var roles = await _appUserService.GetRolesByUsername(appUserLoginDto.Username);
+                        var token = _jwtService.GenerateJwt(appUser, roles);
+                        JwtAccessToken jwtAccessToken = new JwtAccessToken();
+                        jwtAccessToken.Token = token;
+                        return Created("", jwtAccessToken);
+                    }
+                    return BadRequest("Kullanıcı adı veya şifre hatalı");
+                }
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
             }
         }
 

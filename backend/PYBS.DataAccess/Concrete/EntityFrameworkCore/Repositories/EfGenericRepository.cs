@@ -41,8 +41,16 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Repositories
 
         public async Task<TEntity> GetByFilter(Expression<Func<TEntity, bool>> filter)
         {
-            using var context = new PYBSContext();
-            return await context.Set<TEntity>().FirstOrDefaultAsync(filter);
+            try
+            {
+                using var context = new PYBSContext();
+                var data = await context.Set<TEntity>().FirstOrDefaultAsync(filter);
+                return data;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         public async Task<TEntity> GetById(int id)
