@@ -43,11 +43,11 @@ const ProfileScreen = () => {
         <View showsVerticalScrollIndicator={false} style={styles.flow}>
           <BorderedBox label='Kişisel Bilgiler'>
             <PersonelInfo title='Kimlik Numarası' value={user.identityNumber} />
-            <PersonelInfo title='Doğum Tarihi' value={user.birthday} />
+            <PersonelInfo title='Doğum Tarihi' value={new Date(user.birthday).toLocaleDateString()} />
             <PersonelInfo title='Medeni Durum' value={user.maritalStatus} />
             <PersonelInfo title='Kan Grubu' value={user.bloodType} />
             <PersonelInfo title='Cep Telefonu' value={user.phoneNumber} />
-            <PersonelInfo title='Adres' value={user.fullAdress} />
+            <PersonelInfo title='Adres' value={user.description + ' ' + user.district + '/' + user.province} />
           </BorderedBox>
           <BorderedBox label='Eğitim Bilgileri'>
             <PersonelInfo title='Mezuniyet' value={user.graduation} />
@@ -55,8 +55,11 @@ const ProfileScreen = () => {
           </BorderedBox>
           <BorderedBox label='Diğer'>
             <PersonelInfo title='İşveren Firma' value={user.employerCompany} />
-            <PersonelInfo title='SGK İlk Giriş' value={user.sgkFirstEnter} />
-            <PersonelInfo title='İşe Başlama Tarihi' value={user.startingDateOfWork} />
+            <PersonelInfo title='SGK İlk Giriş' value={new Date(user.sgkFirstEntry).toLocaleDateString()} />
+            <PersonelInfo
+              title='İşe Başlama Tarihi'
+              value={new Date(user.startingDateOfEmployment).toLocaleDateString()}
+            />
           </BorderedBox>
         </View>
       </ScrollView>
