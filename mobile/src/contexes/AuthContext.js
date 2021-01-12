@@ -5,7 +5,8 @@ const AuthDispatchContext = createContext()
 
 export default ({ children }) => {
   const authInitialState = {
-    token: ''
+    token: '',
+    id: null
   }
   const [state, setState] = useState(authInitialState)
   return (

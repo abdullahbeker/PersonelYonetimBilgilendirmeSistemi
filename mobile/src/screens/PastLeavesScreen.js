@@ -6,13 +6,11 @@ import Text from '../components/CustomText'
 import { colors, fonts } from '../custom/Theme'
 import { componentifyLeaveRequests, rows } from '../helpers/leaveRequests'
 import api from '../api'
-import { UserContext } from '../contexes/UserContext'
 import FetchAndRefreshIfFails from '../components/FetchAndRefreshIfFails'
 import { MessageDispatchContext } from '../contexes/MessageContext'
 import Notification from '../components/Notification'
 
 export default ({}) => {
-  const { user } = useContext(UserContext)
   const messageDispatch = useContext(MessageDispatchContext)
   const [leaves, setLeaves] = useState([])
   const [fetching, setFetching] = useState(true)
@@ -22,7 +20,7 @@ export default ({}) => {
     try {
       setFetching(true)
       if (error) setError(null)
-      const res = await api.get(`/api/annualleave/getAllLeaveRequestsByPersonnelId/${user.id}`)
+      const res = await api.get(`/api/annualleave/getAllLeaveRequestsByPersonnelId`)
       setLeaves(res.data)
     } catch (err) {
       messageDispatch({ message: 'Bir hata oluştu lütfen daha sonra tekrar deneyin' })

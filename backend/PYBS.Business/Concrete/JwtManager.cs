@@ -25,8 +25,9 @@ namespace PYBS.Business.Concrete
         private List<Claim> GetClaims(AppUser appUser, List<AppRole> roles)
         {
             List<Claim> claims = new List<Claim>();
-            claims.Add(new Claim("username", appUser.Username));
-            claims.Add(new Claim("id", appUser.Id.ToString()));
+            claims.Add(new Claim("id", appUser.Username));
+            claims.Add(new Claim(ClaimTypes.Name,appUser.Username));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, appUser.Id.ToString()));
             if (roles?.Count>0)
             {
                 foreach (var role in roles)

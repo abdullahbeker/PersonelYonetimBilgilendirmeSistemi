@@ -3,7 +3,6 @@ import { StyleSheet, View, ScrollView } from 'react-native'
 import { Button } from 'react-native-elements'
 import { fonts, colors } from '../custom/Theme'
 import api from '../api'
-import { UserContext } from '../contexes/UserContext'
 import { MessageDispatchContext } from '../contexes/MessageContext'
 import { rows, componentifyLeaveRequests, dates } from '../helpers/leaveRequests'
 
@@ -34,13 +33,12 @@ const UnpaidLeaveScreen = ({}) => {
   const [leaveRequestIdToDelete, setLeaveRequestIdToDelete] = useState(0)
 
   const messageDispatch = useContext(MessageDispatchContext)
-  const { user } = useContext(UserContext)
 
   const fetchUnpaidLeaves = async () => {
     try {
       if (error) setError(null)
       setFetchingUnpaidLeaves(true)
-      const res = await api.get(`/api/annualleave/getRequestedAnnualLeavesByPersonnelId/${user.id}`)
+      const res = await api.get(`/api/annualleave/getRequestedAnnualLeavesByPersonnelId/`)
       setUnpaidLeaves(res.data)
     } catch (err) {
       messageDispatch({
@@ -58,7 +56,7 @@ const UnpaidLeaveScreen = ({}) => {
       const res = await api.post('/api/annualleave/requestAnnualLeave', {
         startDate,
         finishDate: returnDate,
-        personnelId: user.id,
+        personnelId: 5,
         leaveReason: ''
       })
       setUnpaidLeaves(res.data)
@@ -186,7 +184,9 @@ const UnpaidLeaveScreen = ({}) => {
               <Table rows={rows()} cols={componentifyLeaveRequests(unpaidLeaves, handleLeaveRequestDelete)} />
             </ScrollView>
           </ScrollView>
-          <Text style={styles.info}>Toplam sütünundaki sarı ile gösterilen sayılar pazar gününe denk gelen gün sayısıdır</Text>
+          <Text style={styles.info}>
+            Toplam sütünundaki sarı ile gösterilen sayılar pazar gününe denk gelen gün sayısıdır
+          </Text>
         </FetchAndRefreshIfFails>
       </Container>
     </>
