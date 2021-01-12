@@ -10,6 +10,8 @@ namespace PYBS.Entity.Dtos.AppUserDtos
         public string Email { get; set; }
         public string PersonnelNumber { get; set; }
         public string BonusCode { get; set; }
+        public string ImageData { get; set; }
+        public string ImageContentType { get; set; }
         public bool IsWorking { get; set; }
         public string Division { get; set; }
         public string EmployerCompany { get; set; }

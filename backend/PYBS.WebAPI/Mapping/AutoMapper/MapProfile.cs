@@ -16,7 +16,7 @@ namespace PYBS.WebAPI.Mapping.AutoMapper
         {
             CreateMap<AppUserAddDto, AppUser>();
             CreateMap<AppUser, AppUserAddDto>();
-
+            CreateMap<PersonnelAddModel, AppUser>();
             CreateMap<LeaveTypeAddDto, LeaveType>();
             CreateMap<LeaveType, LeaveTypeAddDto>();
             CreateMap<PersonnelEditModel, AppUser>();

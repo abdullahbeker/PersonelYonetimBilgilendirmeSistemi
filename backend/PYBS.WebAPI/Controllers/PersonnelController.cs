@@ -8,6 +8,7 @@ using PYBS.Entity.Dtos.AppUserDtos;
 using PYBS.WebAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,8 +19,11 @@ namespace PYBS.WebAPI.Controllers
     public class PersonnelController : ControllerBase
     {
         private readonly IMapper _mapper;
+        private readonly string _uploadPath;
+
         public PersonnelController(IMapper mapper)
         {
+            _uploadPath = Path.Combine("Content", "Images", "Personnel");
             _mapper = mapper;
         }
 
@@ -35,7 +39,9 @@ namespace PYBS.WebAPI.Controllers
                     Department = x.Department,
                     Duty = x.Duty,
                     Name = x.Name,
-                    Surname = x.Surname
+                    Surname = x.Surname,
+                    PersonnelNumber = x.PersonnelNumber,
+                    EmployerCompany = x.EmployerCompany
                 }).ToListAsync();
 
 
@@ -45,26 +51,47 @@ namespace PYBS.WebAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<ActionResult> PersonnelAdd(PersonnelAddModel model)
+        public async Task<ActionResult> PersonnelAdd([FromForm]PersonnelAddModel model)
         {
-            using (var context = new PYBSContext())
+            try
             {
-                var user = await context.AppUsers.FirstOrDefaultAsync(x => x.Id == model.Id);
-                user.Name = model.Name;
-                user.Surname = model.Surname;
-                
+                string filePath = "";
 
-                context.AppUsers.Update(user);
-                try
+                if (model.Image != null && model.Image.Length > 0)
                 {
-                    context.SaveChanges();
-                }
-                catch (Exception ex)
+                    filePath = Path.Combine(_uploadPath, DateTime.Now.Ticks + "_" + model.Image.FileName);
+                    using Stream fileStream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(), filePath), FileMode.Create);
+                    await model.Image.CopyToAsync(fileStream);
+                } else
                 {
-                    return BadRequest(ex.Message);
+                    return BadRequest("Personnel image must be provided");
                 }
 
-                return StatusCode(201, user);
+                using var context = new PYBSContext();
+
+                AppUser user = await context.AppUsers.FirstOrDefaultAsync(x => x.Username == model.Username);
+
+                if (user != null) return BadRequest("Provided username is in use");
+
+                user = _mapper.Map<AppUser>(model);
+                user.ImageUrl = filePath;
+                user.ImageContentType = model.Image.ContentType;
+
+                context.AppUsers.Add(user);
+                context.SaveChanges();
+
+                context.AppUserRoles.Add(new AppUserRole
+                {
+                    AppUserId = user.Id,
+                    AppRoleId = 1
+                });
+
+                context.SaveChanges();
+                return Ok();
+
+            } catch (Exception e)
+            {
+                return StatusCode(500, e);
             }
         }
 
@@ -72,26 +99,36 @@ namespace PYBS.WebAPI.Controllers
         [Route("[action]")]
         public async Task<ActionResult> PersonnelDetails(int personnelId)
         {
-            using (var context = new PYBSContext())
+            try
             {
+                using var context = new PYBSContext();
                 AppUser appUser = await context.AppUsers.FirstOrDefaultAsync(x => x.Id == personnelId);
                 if (appUser == null)
                 {
                     return BadRequest();
                 }
+
                 AppUserDetailsDto user = _mapper.Map<AppUserDetailsDto>(appUser);
+
                 var blood = context.BloodTypes.FirstOrDefault(x => x.Id == appUser.BloodTypeId);
                 var gender = context.Genders.FirstOrDefault(x => x.Id == appUser.GenderId);
                 var district = context.Districts.FirstOrDefault(x => x.Id == appUser.DistrictId);
                 var martial = context.MaritalStatuses.FirstOrDefault(x => x.Id == appUser.MaritalStatusId);
                 var province = context.Provinces.FirstOrDefault(x => x.Id == appUser.ProvinceId);
 
-                user.BloodType = blood==null?"":blood.Name;
+                string pathToImage = Path.Combine(Directory.GetCurrentDirectory(), appUser.ImageUrl);
+                byte[] imageBytes = System.IO.File.ReadAllBytes(pathToImage);
+
+                user.ImageData = Convert.ToBase64String(imageBytes);
+                user.BloodType = blood == null ? "" : blood.Name;
                 user.Gender = gender == null ? "" : gender.Name;
                 user.District = district == null ? "" : district.Name;
                 user.MaritalStatus = martial == null ? "" : martial.Name;
                 user.Province = province == null ? "" : province.Name;
                 return Ok(user);
+            } catch (Exception e)
+            {
+                return StatusCode(500, e);
             }
         }
 

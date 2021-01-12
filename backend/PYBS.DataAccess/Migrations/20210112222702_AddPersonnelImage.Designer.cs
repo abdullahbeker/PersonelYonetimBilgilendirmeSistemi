@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PYBS.DataAccess.Concrete.EntityFrameworkCore.Context;
 
 namespace PYBS.DataAccess.Migrations
 {
     [DbContext(typeof(PYBSContext))]
-    partial class PYBSContextModelSnapshot : ModelSnapshot
+    [Migration("20210112222702_AddPersonnelImage")]
+    partial class AddPersonnelImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,9 +109,6 @@ namespace PYBS.DataAccess.Migrations
                     b.Property<string>("IdentityNumber")
                         .HasColumnType("nvarchar(11)")
                         .HasMaxLength(11);
-
-                    b.Property<string>("ImageContentType")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");

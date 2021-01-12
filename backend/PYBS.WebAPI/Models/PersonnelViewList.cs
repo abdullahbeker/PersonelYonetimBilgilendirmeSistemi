@@ -12,5 +12,7 @@ namespace PYBS.WebAPI.Models
         public string Surname { get; set; }
         public string Department { get; set; }
         public string Duty { get; set; }
+        public string PersonnelNumber { get; set; }
+        public string EmployerCompany { get; set; }
     }
 }

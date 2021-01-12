@@ -12,6 +12,8 @@ namespace PYBS.Entity.Concrete
         public string Username { get; set; }
         public string Password { get; set; }
         public string? Email { get; set; }
+        public string? ImageUrl { get; set; }
+        public string? ImageContentType { get; set; }
         public List<AppUserRole> AppUserRoles { get; set; }
         //Personnel
         public string? PersonnelNumber { get; set; }

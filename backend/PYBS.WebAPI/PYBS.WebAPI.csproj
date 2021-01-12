@@ -14,5 +14,9 @@
     <ProjectReference Include="..\PYBS.Business\PYBS.Business.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Content\Images\Personnel\" />
+  </ItemGroup>
+
 
 </Project>
