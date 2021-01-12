@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PYBS.DataAccess.Concrete.EntityFrameworkCore.Context;
 using PYBS.Entity.Concrete;
+using PYBS.Entity.Dtos.AppUserDtos;
 using PYBS.WebAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -48,26 +49,22 @@ namespace PYBS.WebAPI.Controllers
         {
             using (var context = new PYBSContext())
             {
-                AppUser appUser = new AppUser()
-                {
-                    Name = model.Name,
-                    Surname = model.Surname,
-                    Email = model.EmailAddress,
-                    Password = model.Password,
-                    StartingDateOfEmployment = model.StartingDateOfEmployment,
-                    GenderId = model.GenderId
-                };
+                var user = await context.AppUsers.FirstOrDefaultAsync(x => x.Id == model.Id);
+                user.Name = model.Name;
+                user.Surname = model.Surname;
+                
 
-                await context.AppUsers.AddAsync(appUser);
-                AppUserRole role = new AppUserRole()
+                context.AppUsers.Update(user);
+                try
                 {
-                    AppUserId = appUser.Id,
-                    AppRoleId = model.RoleId
-                };
-                await context.AppUserRoles.AddAsync(role);
-                await context.SaveChangesAsync();
+                    context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
 
-                return StatusCode(201, appUser);
+                return StatusCode(201, user);
             }
         }
 
@@ -82,7 +79,19 @@ namespace PYBS.WebAPI.Controllers
                 {
                     return BadRequest();
                 }
-                return Ok(appUser);
+                AppUserDetailsDto user = _mapper.Map<AppUserDetailsDto>(appUser);
+                var blood = context.BloodTypes.FirstOrDefault(x => x.Id == appUser.BloodTypeId);
+                var gender = context.Genders.FirstOrDefault(x => x.Id == appUser.GenderId);
+                var district = context.Districts.FirstOrDefault(x => x.Id == appUser.DistrictId);
+                var martial = context.MaritalStatuses.FirstOrDefault(x => x.Id == appUser.MaritalStatusId);
+                var province = context.Provinces.FirstOrDefault(x => x.Id == appUser.ProvinceId);
+
+                user.BloodType = blood==null?"":blood.Name;
+                user.Gender = gender == null ? "" : gender.Name;
+                user.District = district == null ? "" : district.Name;
+                user.MaritalStatus = martial == null ? "" : martial.Name;
+                user.Province = province == null ? "" : province.Name;
+                return Ok(user);
             }
         }
 
