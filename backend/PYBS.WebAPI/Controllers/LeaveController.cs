@@ -17,14 +17,19 @@ namespace PYBS.WebAPI.Controllers
     [ApiController]
     public class LeaveController : ControllerBase
     {
+        private readonly IMapper _mapper;
+        private PYBSContext context = new PYBSContext();
+        public LeaveController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
 
-        private PYBSContext context= new PYBSContext();
-        
-        [HttpPost("Leave-request")]
-        public async Task<IActionResult> AddLeave(LeaveRequest leave)
+        [HttpPost("[action]")]
+        public async Task<IActionResult> AddLeave(LeaveRequestAddDto model)
         {
             try
             {
+                var leave = _mapper.Map<LeaveRequest>(model);
                 leave.LeaveStatusId = 1;
                 context.LeaveRequests.Add(leave);
                 await context.SaveChangesAsync();
@@ -35,28 +40,28 @@ namespace PYBS.WebAPI.Controllers
                 return BadRequest(ex);
             }
         }
-        [HttpGet("admin/leave-request")]
+        [HttpGet("[action]")]
         public async Task<List<LeaveRequest>> GetAllLeave()
         {
             return await context.LeaveRequests.ToListAsync();
         }
-        [HttpGet("leave-request/{id}")]
+        [HttpGet("[action]")]
         public async Task<IActionResult> GetLeave(int id)
         {
             var leave = await context.LeaveRequests.FirstOrDefaultAsync(x => x.Id == id);
             if (leave==null) BadRequest();
             return Ok(leave);
         }
-        [HttpGet("leave-request-list/{personnelId}")]
-        public async Task<IActionResult> GetLeaves(int personnelId)
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAllLeavesByPersonnelId(int personnelId)
         {
             var leave = await context.LeaveRequests.Where(x => x.UserId == personnelId).ToListAsync();
             if (leave.Count == 0) return BadRequest();
             return Ok(leave);
         }
 
-        [HttpPost("admin/approval-leave-request")]
-        public async Task<IActionResult> LeaveStatus([FromBody]ApprovalLeave data)
+        [HttpPost("[action]")]
+        public async Task<IActionResult> LeaveStatus([FromBody]ApprovalLeaveDto data)
         {
             try
             {
@@ -71,11 +76,6 @@ namespace PYBS.WebAPI.Controllers
             {
                 return StatusCode(500);
             }
-        }
-        public class ApprovalLeave
-        {
-            public int statusId { get; set; }
-            public int leaveId { get; set; }
         }
     }
 
