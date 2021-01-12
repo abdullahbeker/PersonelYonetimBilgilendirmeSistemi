@@ -2,17 +2,17 @@ import React, { useContext } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { colors } from '../custom/Theme'
-import { UserDispatchContext } from '../contexes/UserContext'
+import { AuthDispatchContext } from '../contexes/AuthContext'
 
 const SettingsScreen = ({ navigation }) => {
-  const userDispatch = useContext(UserDispatchContext)
+  const authSetState = useContext(AuthDispatchContext)
   return (
     <View style={styles.container}>
       <ListItem
         title='Güvenli Çıkış'
         leftIcon={{ name: 'log-out', type: 'feather' }}
         onPress={async () => {
-          userDispatch({ type: 'logout' })
+          authSetState({ token: null, id: null })
           navigation.navigate('Modules')
         }}
       />

@@ -3,7 +3,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import ProfileScreen from '../screens/ProfileScreen'
-import SettingsScreen from './../screens/SettingsScreen'
+import SettingsScreen from '../screens/SettingsScreen'
 
 import ModulesNavigator from './ModulesNavigator'
 import { colors } from '../custom/Theme'
