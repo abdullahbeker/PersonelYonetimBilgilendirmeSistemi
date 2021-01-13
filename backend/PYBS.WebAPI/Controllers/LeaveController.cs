@@ -108,7 +108,7 @@ namespace PYBS.WebAPI.Controllers
         {
             try
             {
-                var leave = await context.LeaveRequests.Include(lf => lf.AppUser).FirstOrDefaultAsync(x => x.Id == leaveApprovalDto.LeaveRequestId);
+                var leave = await context.LeaveRequests.FirstOrDefaultAsync(x => x.Id == leaveApprovalDto.LeaveRequestId);
                 if (leave == null)
                 {
                     return BadRequest();
