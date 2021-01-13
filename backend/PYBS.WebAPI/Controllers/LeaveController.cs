@@ -77,6 +77,24 @@ namespace PYBS.WebAPI.Controllers
                 return StatusCode(500);
             }
         }
+
+        //[HttpPost("[action]")]
+        //public async Task<IActionResult> LeaveApprova()
+        //{
+        //    try
+        //    {
+        //        var leave = await context.LeaveRequests.FirstOrDefaultAsync(x => x.Id == data.leaveId);
+        //        if (leave == null) BadRequest();
+        //        leave.UpdatedAt = DateTime.Now;
+        //        leave.LeaveStatusId = data.statusId;
+        //        await context.SaveChangesAsync();
+        //        return Ok(leave);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return StatusCode(500);
+        //    }
+        //}
     }
 
 }
