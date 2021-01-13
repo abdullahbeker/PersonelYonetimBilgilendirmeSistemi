@@ -131,6 +131,8 @@ namespace PYBS.WebAPI.Controllers
                     return BadRequest();
                 }
                 leave.LeaveStatusId = leaveApprovalDto.LeaveStatusId;
+                context.LeaveRequests.Update(leave);
+                await context.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception)
