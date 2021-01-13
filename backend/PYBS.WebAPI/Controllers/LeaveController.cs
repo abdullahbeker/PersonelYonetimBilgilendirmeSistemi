@@ -46,14 +46,15 @@ namespace PYBS.WebAPI.Controllers
         {
             List<LeaveRequstTableDto> data = new List<LeaveRequstTableDto>();
             var leaveRequestes = await context.LeaveRequests
-                .Include(lr=>lr.LeaveType)
-                .Include(lr=>lr.AppUser)
-                .Include(lr=>lr.LeaveStatus)
+                .Include(lr => lr.LeaveType)
+                .Include(lr => lr.AppUser)
+                .Include(lr => lr.LeaveStatus)
                 .ToListAsync();
             foreach (var leave in leaveRequestes)
             {
                 var model = new LeaveRequstTableDto
                 {
+                    UserId = leave.AppUser.Id,
                     FullName = leave.AppUser.Name + " " + leave.AppUser.Surname,
                     Status = leave.LeaveStatus.Name,
                     CreatedAt = leave.CreatedAt,
@@ -70,7 +71,7 @@ namespace PYBS.WebAPI.Controllers
         public async Task<IActionResult> GetLeave(int id)
         {
             var leave = await context.LeaveRequests.FirstOrDefaultAsync(x => x.Id == id);
-            if (leave==null) BadRequest();
+            if (leave == null) BadRequest();
             return Ok(leave);
         }
 
@@ -85,7 +86,7 @@ namespace PYBS.WebAPI.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> LeaveStatus([FromBody]ApprovalLeaveDto data)
+        public async Task<IActionResult> LeaveStatus([FromBody] ApprovalLeaveDto data)
         {
             try
             {
@@ -107,13 +108,13 @@ namespace PYBS.WebAPI.Controllers
         {
             try
             {
-                var leave = await context.LeaveRequests.Include(lf=>lf.AppUser).FirstOrDefaultAsync(x => x.Id == leaveApprovalDto.LeaveRequestId);
-                if (leave==null)
+                var leave = await context.LeaveRequests.Include(lf => lf.AppUser).FirstOrDefaultAsync(x => x.Id == leaveApprovalDto.LeaveRequestId);
+                if (leave == null)
                 {
                     return BadRequest();
                 }
                 leave.LeaveStatusId = leaveApprovalDto.LeaveStatusId;
-                return Ok(leave.AppUser.Id);
+                return Ok();
             }
             catch (Exception)
             {

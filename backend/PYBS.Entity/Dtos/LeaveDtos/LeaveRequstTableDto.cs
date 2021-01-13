@@ -6,6 +6,7 @@ namespace PYBS.Entity.Dtos.LeaveDtos
 {
     public class LeaveRequstTableDto
     {
+        public int UserId { get; set; }
         public string FullName { get; set; }
         public string LeaveTypeName { get; set; }
         public bool IsPaid { get; set; }
