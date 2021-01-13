@@ -54,6 +54,7 @@ namespace PYBS.WebAPI.Controllers
             {
                 var model = new LeaveRequstTableDto
                 {
+                    RequestId = leave.Id,
                     UserId = leave.AppUser.Id,
                     FullName = leave.AppUser.Name + " " + leave.AppUser.Surname,
                     Status = leave.LeaveStatus.Name,
@@ -70,8 +71,24 @@ namespace PYBS.WebAPI.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> GetLeave(int id)
         {
-            var leave = await context.LeaveRequests.FirstOrDefaultAsync(x => x.Id == id);
-            if (leave == null) BadRequest();
+            var leaveRequest = await context.LeaveRequests
+                .Include(lr => lr.LeaveType)
+                .Include(lr => lr.AppUser)
+                .Include(lr => lr.LeaveStatus)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var leave = new LeaveRequstTableDto
+            {
+                RequestId = leaveRequest.Id,
+                UserId = leaveRequest.AppUser.Id,
+                FullName = leaveRequest.AppUser.Name + " " + leaveRequest.AppUser.Surname,
+                Status = leaveRequest.LeaveStatus.Name,
+                CreatedAt = leaveRequest.CreatedAt,
+                IsPaid = leaveRequest.LeaveType.IsPaid,
+                LeaveFinishDate = leaveRequest.LeaveFinishDate,
+                LeaveStartDate = leaveRequest.LeaveStartDate,
+                LeaveTypeName = leaveRequest.LeaveType.LeaveName
+            };
             return Ok(leave);
         }
 
