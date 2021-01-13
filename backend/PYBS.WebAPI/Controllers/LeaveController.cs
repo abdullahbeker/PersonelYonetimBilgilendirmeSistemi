@@ -100,7 +100,7 @@ namespace PYBS.WebAPI.Controllers
                 .Include(lr => lr.LeaveType)
                 .Include(lr => lr.AppUser)
                 .Include(lr => lr.LeaveStatus)
-                .Where(x => x.AppUser.Id==personnelId)
+                .Where(x => x.UserId==personnelId)
                 .OrderBy(x=>x.CreatedAt)
                 .ToListAsync(); ;
 
