@@ -26,6 +26,7 @@ namespace PYBS.WebAPI.Mapping.AutoMapper
             CreateMap<LeaveTypeAddDto, LeaveType>();
             CreateMap<LeaveType, LeaveTypeUpdateDto>();
             CreateMap<LeaveTypeUpdateDto, LeaveType>();
+            //LeaveRequest
         }
     }
 }

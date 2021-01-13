@@ -42,9 +42,29 @@ namespace PYBS.WebAPI.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<List<LeaveRequest>> GetAllLeaves()
+        public async Task<IActionResult> GetAllLeaves()
         {
-            return await context.LeaveRequests.Include(lr=>lr.LeaveType).ToListAsync();
+            List<LeaveApprovalDto> data = new List<LeaveApprovalDto>();
+            var leaveRequestes = await context.LeaveRequests
+                .Include(lr=>lr.LeaveType)
+                .Include(lr=>lr.AppUser)
+                .Include(lr=>lr.LeaveStatus)
+                .ToListAsync();
+            foreach (var leave in leaveRequestes)
+            {
+                var model = new LeaveApprovalDto
+                {
+                    FullName = leave.AppUser.Name + " " + leave.AppUser.Surname,
+                    Status = leave.LeaveStatus.Name,
+                    CreatedAt = leave.CreatedAt,
+                    IsPaid = leave.LeaveType.IsPaid,
+                    LeaveFinishDate = leave.LeaveFinishDate,
+                    LeaveStartDate = leave.LeaveStartDate,
+                    LeaveTypeName = leave.LeaveType.LeaveName
+                };
+                data.Add(model);
+            }
+            return Ok(data);
         }
 
         [HttpGet("[action]")]
@@ -84,7 +104,7 @@ namespace PYBS.WebAPI.Controllers
         }
 
         //[HttpPost("[action]")]
-        //public async Task<IActionResult> LeaveApprova()
+        //public async Task<IActionResult> LeaveApproval(LeaveApprovalDto)
         //{
         //    try
         //    {
