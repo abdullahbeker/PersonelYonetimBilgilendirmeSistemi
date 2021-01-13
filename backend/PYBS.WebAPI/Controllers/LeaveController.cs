@@ -44,7 +44,7 @@ namespace PYBS.WebAPI.Controllers
         [HttpGet("[action]")]
         public async Task<List<LeaveRequest>> GetAllLeaves()
         {
-            return await context.LeaveRequests.ToListAsync();
+            return await context.LeaveRequests.Include(lr=>lr.LeaveType).ToListAsync();
         }
 
         [HttpGet("[action]")]
