@@ -23,7 +23,7 @@ namespace PYBS.WebAPI.Controllers
 
         public PersonnelController(IMapper mapper)
         {
-            _uploadPath = Path.Combine("wwwroot", "Content", "Images", "Personnel");
+            _uploadPath = Path.Combine("Content", "Images", "Personnel");
             _mapper = mapper;
         }
 

@@ -27,7 +27,6 @@ export default () => {
         username,
         password
       })
-      console.log(res)
       if (!res.data || !res.data.token) {
         setMessage('Yanlış kullanıcı adı veya şifre')
         setLoading(false)

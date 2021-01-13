@@ -12,6 +12,8 @@ namespace PYBS.WebAPI.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Description { get; set; }
         public string EmployerCompany { get; set; }
         public string PersonnelNumber { get; set; }
         public string Username { get; set; }
