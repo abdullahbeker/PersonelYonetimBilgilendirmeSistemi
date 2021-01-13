@@ -46,7 +46,8 @@ namespace PYBS.WebAPI
                     ClockSkew=TimeSpan.Zero
                 };
             });
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();
         }
 
