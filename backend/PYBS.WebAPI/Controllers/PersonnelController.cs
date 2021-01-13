@@ -23,7 +23,7 @@ namespace PYBS.WebAPI.Controllers
 
         public PersonnelController(IMapper mapper)
         {
-            _uploadPath = Path.Combine("Content", "Images", "Personnel");
+            _uploadPath = Path.Combine("wwwroot", "Content", "Images", "Personnel");
             _mapper = mapper;
         }
 
@@ -60,7 +60,8 @@ namespace PYBS.WebAPI.Controllers
                 if (model.Image != null && model.Image.Length > 0)
                 {
                     filePath = Path.Combine(_uploadPath, DateTime.Now.Ticks + "_" + model.Image.FileName);
-                    using Stream fileStream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(), filePath), FileMode.Create);
+                    var combined = Path.Combine(Directory.GetCurrentDirectory(), filePath);
+                    using Stream fileStream = new FileStream(combined, FileMode.Create);
                     await model.Image.CopyToAsync(fileStream);
                 } else
                 {
@@ -116,7 +117,7 @@ namespace PYBS.WebAPI.Controllers
                 var martial = context.MaritalStatuses.FirstOrDefault(x => x.Id == appUser.MaritalStatusId);
                 var province = context.Provinces.FirstOrDefault(x => x.Id == appUser.ProvinceId);
 
-                string pathToImage = Path.Combine(Directory.GetCurrentDirectory(), appUser.ImageUrl);
+                string pathToImage = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", appUser.ImageUrl);
                 byte[] imageBytes = System.IO.File.ReadAllBytes(pathToImage);
 
                 user.ImageData = Convert.ToBase64String(imageBytes);

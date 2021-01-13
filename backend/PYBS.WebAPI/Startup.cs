@@ -57,7 +57,7 @@ namespace PYBS.WebAPI
             app.UseDeveloperExceptionPage();
             app.UseExceptionHandler("/Error");
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
