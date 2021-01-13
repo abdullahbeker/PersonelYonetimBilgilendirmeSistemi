@@ -15,9 +15,10 @@ namespace PYBS.WebAPI.Controllers
         [Route("/error")]
         public IActionResult Error()
         {
-            var error = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            var context = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            var exception = context.Error; // Your exception
             //logging
-            return Problem(detail: "Bir hata oluştu");
+            return Problem(detail: exception.ToString());
         }
     }
 }
