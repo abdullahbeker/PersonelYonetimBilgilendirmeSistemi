@@ -93,15 +93,11 @@ namespace PYBS.WebAPI.Controllers
             }
         }
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetAllLeaveType()
+        public async Task<IActionResult> GetAllLeaveTypes()
         {
             try
             {
                 var leaveTypes = await context.LeaveTypes.ToListAsync();
-                if (leaveTypes == null)
-                {
-                    return BadRequest();
-                }
                 return Ok(leaveTypes);
             }
             catch (Exception ex)

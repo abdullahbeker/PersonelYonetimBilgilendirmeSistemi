@@ -42,7 +42,7 @@ namespace PYBS.WebAPI.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<List<LeaveRequest>> GetAllLeave()
+        public async Task<List<LeaveRequest>> GetAllLeaves()
         {
             return await context.LeaveRequests.ToListAsync();
         }
@@ -62,7 +62,6 @@ namespace PYBS.WebAPI.Controllers
                 .Where(x => x.UserId == personnelId)
                 .OrderByDescending(x => x.CreatedAt)
                 .ToListAsync();
-            if (leave.Count == 0) return BadRequest();
             return Ok(leave);
         }
 
