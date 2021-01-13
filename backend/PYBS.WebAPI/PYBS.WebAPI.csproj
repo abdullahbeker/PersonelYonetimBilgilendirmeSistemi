@@ -16,7 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Content\Images\Personnel\" />
+    <None Include="wwwroot\Content\Images\Personnel\637460983235486699_ex1.jpg" />
+    <None Include="wwwroot\Content\Images\Personnel\637460986297564085_ex1.jpg" />
+    <None Include="wwwroot\Content\Images\Personnel\637460989178875700_ex1.jpg" />
+    <None Include="wwwroot\Content\Images\Personnel\637461006039999356_ex1.jpg" />
+    <None Include="wwwroot\Content\Images\Personnel\637461010717944733_ex1.jpg" />
   </ItemGroup>
 
 
