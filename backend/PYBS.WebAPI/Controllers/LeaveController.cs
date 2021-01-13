@@ -95,11 +95,31 @@ namespace PYBS.WebAPI.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAllLeavesByPersonnelId(int personnelId)
         {
-            var leave = await context.LeaveRequests
-                .Where(x => x.UserId == personnelId)
-                .OrderByDescending(x => x.CreatedAt)
-                .ToListAsync();
-            return Ok(leave);
+            List<LeaveRequstViewDto> data = new List<LeaveRequstViewDto>();
+            var leaveRequestes = await context.LeaveRequests
+                .Include(lr => lr.LeaveType)
+                .Include(lr => lr.AppUser)
+                .Include(lr => lr.LeaveStatus)
+                .Where(x => x.AppUser.Id==personnelId)
+                .ToListAsync(); ;
+
+            foreach (var leave in leaveRequestes)
+            {
+                var model = new LeaveRequstViewDto
+                {
+                    RequestId = leave.Id,
+                    UserId = leave.AppUser.Id,
+                    FullName = leave.AppUser.Name + " " + leave.AppUser.Surname,
+                    Status = leave.LeaveStatus.Name,
+                    CreatedAt = leave.CreatedAt,
+                    IsPaid = leave.LeaveType.IsPaid,
+                    LeaveFinishDate = leave.LeaveFinishDate,
+                    LeaveStartDate = leave.LeaveStartDate,
+                    LeaveTypeName = leave.LeaveType.LeaveName
+                };
+                data.Add(model);
+            }
+            return Ok(data);
         }
 
         [HttpPost("[action]")]
