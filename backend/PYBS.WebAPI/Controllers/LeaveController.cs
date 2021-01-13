@@ -44,7 +44,7 @@ namespace PYBS.WebAPI.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAllLeaves()
         {
-            List<LeaveRequstTableDto> data = new List<LeaveRequstTableDto>();
+            List<LeaveRequstViewDto> data = new List<LeaveRequstViewDto>();
             var leaveRequestes = await context.LeaveRequests
                 .Include(lr => lr.LeaveType)
                 .Include(lr => lr.AppUser)
@@ -52,7 +52,7 @@ namespace PYBS.WebAPI.Controllers
                 .ToListAsync();
             foreach (var leave in leaveRequestes)
             {
-                var model = new LeaveRequstTableDto
+                var model = new LeaveRequstViewDto
                 {
                     RequestId = leave.Id,
                     UserId = leave.AppUser.Id,
@@ -77,7 +77,7 @@ namespace PYBS.WebAPI.Controllers
                 .Include(lr => lr.LeaveStatus)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            var leave = new LeaveRequstTableDto
+            var leave = new LeaveRequstViewDto
             {
                 RequestId = leaveRequest.Id,
                 UserId = leaveRequest.AppUser.Id,

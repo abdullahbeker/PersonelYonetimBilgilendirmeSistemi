@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PYBS.Entity.Dtos.LeaveDtos
 {
-    public class LeaveRequstTableDto
+    public class LeaveRequstViewDto
     {
         public int UserId { get; set; }
         public int RequestId { get; set; }
