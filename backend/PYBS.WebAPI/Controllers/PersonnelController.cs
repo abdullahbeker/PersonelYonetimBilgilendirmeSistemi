@@ -60,7 +60,7 @@ namespace PYBS.WebAPI.Controllers
                 if (model.Image != null && model.Image.Length > 0)
                 {
                     filePath = Path.Combine(_uploadPath, DateTime.Now.Ticks + "_" + model.Image.FileName);
-                    var combined = Path.Combine(Directory.GetCurrentDirectory(), filePath);
+                    var combined = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", filePath);
                     using Stream fileStream = new FileStream(combined, FileMode.Create);
                     await model.Image.CopyToAsync(fileStream);
                 } else
