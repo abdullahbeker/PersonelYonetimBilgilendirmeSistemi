@@ -40,11 +40,13 @@ namespace PYBS.WebAPI.Controllers
                 return BadRequest(ex);
             }
         }
+
         [HttpGet("[action]")]
         public async Task<List<LeaveRequest>> GetAllLeave()
         {
             return await context.LeaveRequests.ToListAsync();
         }
+
         [HttpGet("[action]")]
         public async Task<IActionResult> GetLeave(int id)
         {
@@ -52,10 +54,14 @@ namespace PYBS.WebAPI.Controllers
             if (leave==null) BadRequest();
             return Ok(leave);
         }
+
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAllLeavesByPersonnelId(int personnelId)
         {
-            var leave = await context.LeaveRequests.Where(x => x.UserId == personnelId).ToListAsync();
+            var leave = await context.LeaveRequests
+                .Where(x => x.UserId == personnelId)
+                .OrderByDescending(x => x.CreatedAt)
+                .ToListAsync();
             if (leave.Count == 0) return BadRequest();
             return Ok(leave);
         }

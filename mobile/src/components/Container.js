@@ -13,8 +13,7 @@ const Container = ({ children, containerStyles }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primaryLight,
-    padding: 10
+    backgroundColor: colors.primaryLight
   },
   inner: {
     flex: 1,

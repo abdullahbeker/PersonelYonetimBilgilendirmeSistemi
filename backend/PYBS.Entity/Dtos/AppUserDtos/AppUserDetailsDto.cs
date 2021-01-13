@@ -7,6 +7,7 @@ namespace PYBS.Entity.Dtos.AppUserDtos
     public class AppUserDetailsDto
     {
         public int Id { get; set; }
+        public string Username { get; set; }
         public string Email { get; set; }
         public string PersonnelNumber { get; set; }
         public string BonusCode { get; set; }
