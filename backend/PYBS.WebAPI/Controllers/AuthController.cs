@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -85,15 +86,21 @@ namespace PYBS.WebAPI.Controllers
         [Authorize]
         public async Task<IActionResult> ActiveUser()
         {
+
             var user = await _appUserService.FindByUsername(User.Identity.Name);
             var roles = await _appUserService.GetRolesByUsername(User.Identity.Name);
+            string pathToImage = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", user.ImageUrl);
+            byte[] imageBytes = System.IO.File.ReadAllBytes(pathToImage);
+
+
             AppUserDto appUserDto = new AppUserDto()
             {
                 Id = user.Id,
                 Name = user.Name,
                 Surname = user.Surname,
                 Username = user.Username,
-                Roles = roles.Select(x => x.Name).ToList()
+                Roles = roles.Select(x => x.Name).ToList(),
+                ImageData = Convert.ToBase64String(imageBytes)
             };
             return Ok(appUserDto);
         }
