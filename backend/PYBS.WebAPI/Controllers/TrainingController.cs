@@ -79,6 +79,11 @@ namespace PYBS.WebAPI.Controllers
                         PersonnelId = personnel,
                         TrainingId = trainingPersonnelAdd.TrainingId
                     };
+                    if (await context.TrainingPersonnels
+                        .AnyAsync(x => x.TrainingId == trainingPersonnel.TrainingId && x.PersonnelId == trainingPersonnel.PersonnelId))
+                    {
+
+                    }
                     await context.TrainingPersonnels.AddAsync(trainingPersonnel);
                 }
                 await context.SaveChangesAsync();
