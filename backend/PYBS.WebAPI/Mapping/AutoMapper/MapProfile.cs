@@ -2,6 +2,7 @@ using AutoMapper;
 using PYBS.Entity.Concrete;
 using PYBS.Entity.Concrete.TrainingEntities;
 using PYBS.Entity.Dtos.AppUserDtos;
+using PYBS.Entity.Dtos.AssetsDto;
 using PYBS.Entity.Dtos.LeaveDtos;
 using PYBS.Entity.Dtos.LeaveTypeDtos;
 using PYBS.Entity.Dtos.TrainingDtos;
@@ -31,6 +32,9 @@ namespace PYBS.WebAPI.Mapping.AutoMapper
             CreateMap<LeaveRequestAddDto, LeaveRequest>();
             //Training
             CreateMap<TrainingAddDto, Training>();
+            //Assets
+            CreateMap<AssetAddDto, Asset>();
+            CreateMap<AssetUpdateDto, Asset>();
 
         }
     }
