@@ -13,7 +13,6 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Mapping.TrainingMaps
         {
             builder.HasNoKey();
             builder.HasIndex(x => new { x.TrainingId, x.PersonnelId }).IsUnique();
-            builder.Property(x => x.StatusId).IsRequired();
         }
     }
 }

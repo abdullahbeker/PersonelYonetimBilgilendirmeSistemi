@@ -12,9 +12,8 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Mapping.TrainingMaps
         public void Configure(EntityTypeBuilder<Training> builder)
         {
             builder.HasKey(x => x.Id);
-
             builder.Property(x => x.Id).UseIdentityColumn();
-
+            builder.Property(x => x.Status).HasConversion<int>().IsRequired();
             builder.Property(x => x.TrainingName).HasMaxLength(75).IsRequired();
             builder.Property(x => x.StartDate).IsRequired();
             builder.Property(x => x.FinishDate).IsRequired();
@@ -24,5 +23,4 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Mapping.TrainingMaps
             builder.Property(x => x.Instructor).HasMaxLength(50).IsRequired();
         }
     }
-
 }

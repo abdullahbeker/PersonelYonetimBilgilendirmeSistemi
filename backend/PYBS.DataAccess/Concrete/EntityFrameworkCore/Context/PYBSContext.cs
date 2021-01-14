@@ -21,7 +21,6 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
             modelBuilder.ApplyConfiguration(new AppUserRoleMap());
             modelBuilder.ApplyConfiguration(new TrainingMap());
             modelBuilder.ApplyConfiguration(new TrainingPersonnelMap());
-            modelBuilder.ApplyConfiguration(new TrainingStatusMap());
             modelBuilder.ApplyConfiguration(new BloodTypeMap());
             modelBuilder.ApplyConfiguration(new DistrictMap());
             modelBuilder.ApplyConfiguration(new GenderMap());
@@ -41,8 +40,6 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
         public DbSet<LeaveRequest> LeaveRequests { get; set; }
         public DbSet<Training> Trainings { get; set; }
         public DbSet<TrainingPersonnel> TrainingPersonnels { get; set; }
-        public DbSet<TrainingStatus> TrainingStatuses { get; set; }
-
 
   }
 }

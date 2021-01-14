@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PYBS.DataAccess.Concrete.EntityFrameworkCore.Context;
 
 namespace PYBS.DataAccess.Migrations
 {
     [DbContext(typeof(PYBSContext))]
-    partial class PYBSContextModelSnapshot : ModelSnapshot
+    [Migration("20210114092422_Update_Training_Tables")]
+    partial class Update_Training_Tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -436,6 +438,24 @@ namespace PYBS.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("TrainingPersonnels");
+                });
+
+            modelBuilder.Entity("PYBS.Entity.Concrete.TrainingEntities.TrainingStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Name")
+                        .HasColumnType("int")
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TrainingStatuses");
                 });
 
             modelBuilder.Entity("PYBS.Entity.Concrete.AppUser", b =>

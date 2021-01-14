@@ -9,6 +9,5 @@ namespace PYBS.Entity.Concrete.TrainingEntities
     {
         public int TrainingId { get; set; }
         public int PersonnelId { get; set; }
-        public int StatusId { get; set; }
     }
 }
