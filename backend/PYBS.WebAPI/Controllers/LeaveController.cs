@@ -49,6 +49,7 @@ namespace PYBS.WebAPI.Controllers
                 .Include(lr => lr.LeaveType)
                 .Include(lr => lr.AppUser)
                 .Include(lr => lr.LeaveStatus)
+                .OrderBy(lr=>lr.LeaveStatusId)
                 .ToListAsync();
             foreach (var leave in leaveRequestes)
             {
