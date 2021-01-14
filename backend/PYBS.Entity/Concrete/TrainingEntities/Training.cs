@@ -13,7 +13,6 @@ namespace PYBS.Entity.Concrete.TrainingEntities
             CONTINUES,
             DONE
         }
-
         public int Id { get; set; }
         public string TrainingName { get; set; }
         public DateTime StartDate { get; set; }
