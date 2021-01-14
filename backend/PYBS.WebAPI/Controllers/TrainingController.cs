@@ -77,7 +77,7 @@ namespace PYBS.WebAPI.Controllers
                     var trainingPersonnel = new TrainingPersonnel
                     {
                         PersonnelId = personnel,
-                        TrainingId = trainingPersonnelAdd.TraininId
+                        TrainingId = trainingPersonnelAdd.TrainingId
                     };
                     await context.TrainingPersonnels.AddAsync(trainingPersonnel);
                 }
