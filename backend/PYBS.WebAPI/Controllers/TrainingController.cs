@@ -54,12 +54,30 @@ namespace PYBS.WebAPI.Controllers
             }
         }
         [HttpGet("[action]")]
+        public async Task<IActionResult> TrainingAttend(TrainingPersonnel trainingPersonnel)
+        {
+            try
+            {
+                await context.TrainingPersonnels.AddAsync(trainingPersonnel);
+                await context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        [HttpGet("[action]")]
         public async Task<IActionResult> GetAllTrainingsByPersonnelId(int personnelId)
         {
             try
             {
                 var trainings = await context.TrainingPersonnels.Include(x => x.Training).Where(x => x.PersonnelId == personnelId).ToListAsync();
-                return Ok(trainings);
+                return Ok(new
+                {
+                    UserId = personnelId,
+                    Trainings = trainings
+                });
             }
             catch (Exception ex)
             {
@@ -71,8 +89,8 @@ namespace PYBS.WebAPI.Controllers
         {
             try
             {
-                var training = await context.Trainings.FirstOrDefaultAsync(x=>x.Id== trainingId);
-                if (training==null)
+                var training = await context.Trainings.FirstOrDefaultAsync(x => x.Id == trainingId);
+                if (training == null)
                 {
                     return BadRequest();
                 }

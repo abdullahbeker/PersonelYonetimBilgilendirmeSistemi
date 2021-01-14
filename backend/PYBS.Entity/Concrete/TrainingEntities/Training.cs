@@ -11,7 +11,8 @@ namespace PYBS.Entity.Concrete.TrainingEntities
         {
             NOT_STARTED,
             CONTINUES,
-            DONE
+            DONE,
+            CANCEL
         }
         public int Id { get; set; }
         public string TrainingName { get; set; }
