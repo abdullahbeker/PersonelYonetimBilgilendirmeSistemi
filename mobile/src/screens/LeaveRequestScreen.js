@@ -22,7 +22,6 @@ export default ({ navigation }) => {
   const [totalSelectedDay, setTotalSelectedDay] = useState(0)
   const [disabled, setDisabled] = useState(false)
   const [disableReason, setDisableReason] = useState('')
-  const [requesting, setRequesting] = useState(false)
 
   const [leaveTypes, setLeaveTypes] = useState()
   const [loading, setLoading] = useState(true)
@@ -119,7 +118,7 @@ export default ({ navigation }) => {
             Toplam <Text style={{ fontFamily: fonts.oxygenBold }}>{totalSelectedDay}</Text> gün seçildi
           </Text>
         </View>
-        <Button disabled={disabled || requesting} title='Talep Et' onPress={handleOnRequest} />
+        <Button disabled={disabled} title='Talep Et' onPress={handleOnRequest} />
       </Container>
     </React.Fragment>
   )
