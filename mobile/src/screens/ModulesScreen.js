@@ -10,7 +10,7 @@ const ModulesScreen = ({ navigation }) => {
         <ListElement
           label='İzin'
           to={() => {
-            navigation.navigate('Leave')
+            navigation.navigate('Leaves')
           }}
         />
         <ListElement

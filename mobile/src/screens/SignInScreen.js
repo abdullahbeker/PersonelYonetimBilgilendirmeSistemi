@@ -36,7 +36,7 @@ export default () => {
       setAuthToken(res.data.token, api)
       setAuthState({ token: res.data.token, id })
     } catch (err) {
-      console.log(err)
+      console.log(err.toJSON())
       removeAuthToken(api)
       setMessage('Bir hata oluştu, lütfen daha sonra tekrar deneyin')
       setLoading(false)
