@@ -6,7 +6,7 @@ namespace PYBS.Entity.Dtos.TrainingDtos
 {
     public class TrainingPersonnelAdd
     {
-        public int TraininId { get; set; }
+        public int TrainingId { get; set; }
         public List<int> PersonnelList { get; set; }
     }
 }
