@@ -73,10 +73,32 @@ namespace PYBS.WebAPI.Controllers
             try
             {
                 var trainings = await context.TrainingPersonnels.Include(x => x.Training).Where(x => x.PersonnelId == personnelId).ToListAsync();
+                return Ok(trainings);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAllPerssonelByTrainingId(int trainingId)
+        {
+            try
+            {
+                var trainingPersonnels = await context.TrainingPersonnels
+                    .Include(x => x.AppUser)
+                    .Where(x => x.TrainingId == trainingId)
+                    .Select(x => new
+                    {
+                        UserId = x.PersonnelId,
+                        FullName = x.AppUser.Name + " " + x.AppUser.Surname
+                    })
+                    .ToListAsync();
+
                 return Ok(new
                 {
-                    UserId = personnelId,
-                    Trainings = trainings
+                    TrainingId=trainingId,
+                    PersonnelList=trainingPersonnels
                 });
             }
             catch (Exception ex)
