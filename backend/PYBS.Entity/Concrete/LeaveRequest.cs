@@ -1,6 +1,7 @@
 using PYBS.Entity.Abstract;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace PYBS.Entity.Concrete
@@ -9,6 +10,7 @@ namespace PYBS.Entity.Concrete
   {
     public int Id { get; set; }
     public int UserId { get; set; }
+    [ForeignKey("UserId")]
     public AppUser AppUser { get; set; }
     public int LeaveTypeId { get; set; }
     public LeaveType LeaveType { get; set; }
