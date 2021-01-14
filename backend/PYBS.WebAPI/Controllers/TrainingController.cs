@@ -72,19 +72,22 @@ namespace PYBS.WebAPI.Controllers
         {
             try
             {
+                var registeredUsers = context.TrainingPersonnels
+                    .Where(x => x.TrainingId == trainingPersonnelAdd.TrainingId)
+                    .Select(x => x.AppUser.Id)
+                    .ToList();
+
                 foreach (var personnel in trainingPersonnelAdd.PersonnelList)
                 {
-                    var trainingPersonnel = new TrainingPersonnel
+                    if (!registeredUsers.Contains(personnel))
                     {
-                        PersonnelId = personnel,
-                        TrainingId = trainingPersonnelAdd.TrainingId
-                    };
-                    if (await context.TrainingPersonnels
-                        .AnyAsync(x => x.TrainingId == trainingPersonnel.TrainingId && x.PersonnelId == trainingPersonnel.PersonnelId))
-                    {
-
+                        var trainingPersonnel = new TrainingPersonnel
+                        {
+                            PersonnelId = personnel,
+                            TrainingId = trainingPersonnelAdd.TrainingId
+                        };
+                        context.TrainingPersonnels.Add(trainingPersonnel);
                     }
-                    await context.TrainingPersonnels.AddAsync(trainingPersonnel);
                 }
                 await context.SaveChangesAsync();
                 return Ok();
