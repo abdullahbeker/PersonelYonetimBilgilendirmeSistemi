@@ -16,7 +16,7 @@ const ModulesScreen = ({ navigation }) => {
         <ListElement
           label='Eğitim'
           to={() => {
-            navigation.navigate('Announcement')
+            navigation.navigate('Trainings')
           }}
         />
       </View>
@@ -24,7 +24,7 @@ const ModulesScreen = ({ navigation }) => {
         <ListElement
           label='Zimmet'
           to={() => {
-            navigation.navigate('Settings')
+            navigation.navigate('Assets')
           }}
         />
       </View>
