@@ -7,6 +7,6 @@ namespace PYBS.Entity.Dtos.TrainingDtos
     public class TrainingPersonnelAdd
     {
         public int TrainingId { get; set; }
-        public List<int> PersonnelList { get; set; }
+        public IEnumerable<int> PersonnelList { get; set; }
     }
 }
