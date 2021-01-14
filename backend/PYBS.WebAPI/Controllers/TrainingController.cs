@@ -54,6 +54,31 @@ namespace PYBS.WebAPI.Controllers
             }
         }
         [HttpGet("[action]")]
+        public async Task<IActionResult> GetAllTrainingsAndPersonnel()
+        {
+            try
+            {
+                List<TrainingAndPersonnelDto> data = new List<TrainingAndPersonnelDto>();
+                var trainings = await context.Trainings.ToListAsync();
+                foreach (var item in trainings)
+                {
+                    TrainingAndPersonnelDto trainingAndPersonnelDto = new TrainingAndPersonnelDto
+                    {
+                        Training = item,
+                        AppUsers = await context.TrainingPersonnels.
+                        Include(x => x.AppUser).Where(x => x.TrainingId == item.Id).Select(x => x.AppUser).ToListAsync()
+                    };
+                    data.Add(trainingAndPersonnelDto);
+                }
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("[action]")]
         public async Task<IActionResult> TrainingAttend(TrainingPersonnel trainingPersonnel)
         {
             try
