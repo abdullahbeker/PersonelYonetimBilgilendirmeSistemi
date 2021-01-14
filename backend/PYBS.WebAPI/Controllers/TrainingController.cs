@@ -54,6 +54,31 @@ namespace PYBS.WebAPI.Controllers
             }
         }
         [HttpGet("[action]")]
+        public async Task<IActionResult> GetAllTrainingsAndPersonnel()
+        {
+            try
+            {
+                List<TrainingAndPersonnelDto> data = new List<TrainingAndPersonnelDto>();
+                var trainings = await context.Trainings.ToListAsync();
+                foreach (var item in trainings)
+                {
+                    TrainingAndPersonnelDto trainingAndPersonnelDto = new TrainingAndPersonnelDto
+                    {
+                        Training = item,
+                        AppUsers = await context.TrainingPersonnels.
+                        Include(x => x.AppUser).Where(x => x.TrainingId == item.Id).Select(x => x.AppUser).ToListAsync()
+                    };
+                    data.Add(trainingAndPersonnelDto);
+                }
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("[action]")]
         public async Task<IActionResult> TrainingAttend(TrainingPersonnel trainingPersonnel)
         {
             try
@@ -72,25 +97,27 @@ namespace PYBS.WebAPI.Controllers
         {
             try
             {
-                var registeredUsers = context.TrainingPersonnels
-                    .Where(x => x.TrainingId == trainingPersonnelAdd.TrainingId)
-                    .Select(x => x.AppUser.Id)
-                    .ToList();
-
-                foreach (var personnel in trainingPersonnelAdd.PersonnelList)
+                if (await context.Trainings.AnyAsync(x=>x.Id==trainingPersonnelAdd.TrainingId))
                 {
-                    if (!registeredUsers.Contains(personnel))
+                    foreach (var personnel in trainingPersonnelAdd.PersonnelList)
                     {
-                        var trainingPersonnel = new TrainingPersonnel
+                        if (!await context.TrainingPersonnels.AnyAsync(x=>x.TrainingId==trainingPersonnelAdd.TrainingId&& x.PersonnelId==personnel))
                         {
-                            PersonnelId = personnel,
-                            TrainingId = trainingPersonnelAdd.TrainingId
-                        };
-                        context.TrainingPersonnels.Add(trainingPersonnel);
+                            TrainingPersonnel trainingPersonnel = new TrainingPersonnel
+                            {
+                                PersonnelId = personnel,
+                                TrainingId = trainingPersonnelAdd.TrainingId
+                            };
+                            await context.TrainingPersonnels.AddAsync(trainingPersonnel);
+                        }
                     }
+                    await context.SaveChangesAsync();
+                    return Ok();
                 }
-                await context.SaveChangesAsync();
-                return Ok();
+                else
+                {
+                    return BadRequest();
+                }
             }
             catch (Exception ex)
             {
