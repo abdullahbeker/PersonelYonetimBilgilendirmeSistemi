@@ -68,6 +68,28 @@ namespace PYBS.WebAPI.Controllers
             }
         }
         [HttpGet("[action]")]
+        public async Task<IActionResult> TrainingAttends(TrainingPersonnelAdd trainingPersonnelAdd)
+        {
+            try
+            {
+                foreach (var personnel in trainingPersonnelAdd.PersonnelList)
+                {
+                    var trainingPersonnel = new TrainingPersonnel
+                    {
+                        PersonnelId = personnel,
+                        TrainingId = trainingPersonnelAdd.TraininId
+                    };
+                    await context.TrainingPersonnels.AddAsync(trainingPersonnel);
+                }
+                await context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        [HttpGet("[action]")]
         public async Task<IActionResult> GetAllTrainingsByPersonnelId(int personnelId)
         {
             try
