@@ -67,7 +67,7 @@ namespace PYBS.WebAPI.Controllers
                 return BadRequest(ex);
             }
         }
-        [HttpGet("[action]")]
+        [HttpPost("[action]")]
         public async Task<IActionResult> TrainingAttends(TrainingPersonnelAdd trainingPersonnelAdd)
         {
             try
