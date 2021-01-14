@@ -1,5 +1,6 @@
 
 using PYBS.Entity.Abstract;
+using PYBS.Entity.Concrete.TrainingEntities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -51,8 +52,13 @@ namespace PYBS.Entity.Concrete
         //TimeStamps
         public DateTime? CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
+
+
+
         //References
         public List<LeaveRequest> LeaveRequests { get; set; }
+        public List<Asset> Assets { get; set; }
+        public List<TrainingPersonnel> TrainingPersonnels{ get; set; }
 
     }
 }

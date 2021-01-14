@@ -22,5 +22,6 @@ namespace PYBS.Entity.Concrete.TrainingEntities
         public string EducatingFirm { get; set; }
         public string Instructor { get; set; }
         public TrainingStatus Status { get; set; }
+        public List<TrainingPersonnel> TrainingPersonnels { get; set; }
     }
 }

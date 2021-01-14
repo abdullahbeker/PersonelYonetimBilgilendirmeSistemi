@@ -26,7 +26,7 @@ namespace PYBS.WebAPI.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> AddLeaveType(TrainingAddDto trainingAddDto)
+        public async Task<IActionResult> AddTraining(TrainingAddDto trainingAddDto)
         {
             try
             {

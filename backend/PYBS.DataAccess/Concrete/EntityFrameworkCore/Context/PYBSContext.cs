@@ -26,6 +26,7 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
             modelBuilder.ApplyConfiguration(new GenderMap());
             modelBuilder.ApplyConfiguration(new MaritalStatusMap());
             modelBuilder.ApplyConfiguration(new ProvinceMap());
+            modelBuilder.ApplyConfiguration(new AssetMap());
         }
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<AppRole> AppRoles { get; set; }
@@ -40,6 +41,7 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Context
         public DbSet<LeaveRequest> LeaveRequests { get; set; }
         public DbSet<Training> Trainings { get; set; }
         public DbSet<TrainingPersonnel> TrainingPersonnels { get; set; }
+        public DbSet<Asset>Assets{ get; set; }
 
-  }
+    }
 }

@@ -44,6 +44,8 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Mapping
             builder.HasOne(x => x.Province).WithMany(x => x.AppUsers).HasForeignKey(x=>x.ProvinceId).OnDelete(DeleteBehavior.Restrict).IsRequired(false);
 
             builder.HasOne(x => x.District).WithMany(x => x.AppUsers).HasForeignKey(x => x.DistrictId).OnDelete(DeleteBehavior.Restrict).IsRequired(false);
+
+            builder.HasMany(x => x.TrainingPersonnels).WithOne(x => x.AppUser).HasForeignKey(x => x.PersonnelId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

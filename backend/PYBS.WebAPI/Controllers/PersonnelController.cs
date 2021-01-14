@@ -48,7 +48,16 @@ namespace PYBS.WebAPI.Controllers
                 return Ok(data);
             }
         }
-
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<ActionResult> PersonnelListShortDetail()
+        {
+            using (var context = new PYBSContext())
+            {
+                var data = await context.AppUsers.Select(x => new { x.Id,FullName= x.Name+" "+x.Surname}).ToListAsync();
+                return Ok(data);
+            }
+        }
         [HttpPost]
         [Route("[action]")]
         public async Task<ActionResult> PersonnelAdd([FromForm]PersonnelAddModel model)
