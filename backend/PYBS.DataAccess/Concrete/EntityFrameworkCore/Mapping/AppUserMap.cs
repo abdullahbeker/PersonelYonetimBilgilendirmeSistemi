@@ -33,17 +33,19 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Mapping
             builder.Property(x => x.PhoneNumber).HasMaxLength(11);
             builder.Property(x => x.Status).HasMaxLength(100);
 
-            builder.HasMany(x => x.AppUserRoles).WithOne(x => x.AppUser).HasForeignKey(x => x.AppUserId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(x => x.AppUserRoles).WithOne(x => x.AppUser).HasForeignKey(x => x.AppUserId).OnDelete(DeleteBehavior.Cascade).IsRequired(false);
 
-            builder.HasOne(x => x.BloodType).WithMany(x => x.AppUsers).HasForeignKey(x => x.BloodTypeId); 
+            builder.HasOne(x => x.BloodType).WithMany(x => x.AppUsers).HasForeignKey(x => x.BloodTypeId).IsRequired(false); 
 
-            builder.HasOne(x => x.Gender).WithMany(x => x.AppUsers).HasForeignKey(x => x.GenderId);
+            builder.HasOne(x => x.Gender).WithMany(x => x.AppUsers).HasForeignKey(x => x.GenderId).IsRequired(false);
 
-            builder.HasOne(x => x.MaritalStatus).WithMany(x => x.AppUsers).HasForeignKey(x => x.MaritalStatusId);
+            builder.HasOne(x => x.MaritalStatus).WithMany(x => x.AppUsers).HasForeignKey(x => x.MaritalStatusId).IsRequired(false);
 
-            builder.HasOne(x => x.Province).WithMany(x => x.AppUsers).HasForeignKey(x=>x.ProvinceId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(x => x.Province).WithMany(x => x.AppUsers).HasForeignKey(x=>x.ProvinceId).OnDelete(DeleteBehavior.Restrict).IsRequired(false);
 
-            builder.HasOne(x => x.District).WithMany(x => x.AppUsers).HasForeignKey(x => x.DistrictId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(x => x.District).WithMany(x => x.AppUsers).HasForeignKey(x => x.DistrictId).OnDelete(DeleteBehavior.Restrict).IsRequired(false);
+
+            builder.HasMany(x => x.TrainingPersonnels).WithOne(x => x.AppUser).HasForeignKey(x => x.PersonnelId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

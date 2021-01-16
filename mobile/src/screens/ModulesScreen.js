@@ -8,44 +8,23 @@ const ModulesScreen = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.row}>
         <ListElement
-          label='Yıllık İzin'
+          label='İzin'
           to={() => {
-            navigation.navigate('Leave')
+            navigation.navigate('Leaves')
           }}
         />
         <ListElement
-          label='Duyurular'
+          label='Eğitim'
           to={() => {
-            navigation.navigate('Announcement')
+            navigation.navigate('Trainings')
           }}
         />
       </View>
       <View style={styles.row}>
         <ListElement
-          label='Puantaj'
+          label='Zimmet'
           to={() => {
-            navigation.navigate('Settings')
-          }}
-        />
-        <ListElement
-          label='Zimmetler'
-          to={() => {
-            navigation.navigate('Settings')
-          }}
-        />
-      </View>
-
-      <View style={styles.row}>
-        <ListElement
-          label='Vardiya'
-          to={() => {
-            navigation.navigate('Settings')
-          }}
-        />
-        <ListElement
-          label='Avans & Borç'
-          to={() => {
-            navigation.navigate('Settings')
+            navigation.navigate('Assets')
           }}
         />
       </View>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -30,30 +31,37 @@ namespace PYBS.WebAPI.Controllers
 
         [HttpPost("[action]")]
         //[ValidModel]
-        public async Task<IActionResult> SignIn(AppUserLoginDto appUserLoginDto)
+        public async Task<IActionResult> SignIn([FromBody] AppUserLoginDto appUserLoginDto)
         {
-            var appUser = await _appUserService.FindByUsername(appUserLoginDto.Username);
-            if (appUser == null)
+            try
             {
-                return BadRequest("Kullanıcı adı veya şifre hatalı");
-            }
-            else
-            {
-                if (await _appUserService.CheckPassword(appUserLoginDto))
+                var appUser = await _appUserService.FindByUsername(appUserLoginDto.Username);
+                if (appUser == null)
                 {
-                    var roles = await _appUserService.GetRolesByUsername(appUserLoginDto.Username);
-                    var token = _jwtService.GenerateJwt(appUser, roles);
-                    JwtAccessToken jwtAccessToken = new JwtAccessToken();
-                    jwtAccessToken.Token = token;
-                    return Created("", jwtAccessToken);
+                    return BadRequest("Kullanıcı adı veya şifre hatalı");
                 }
-                return BadRequest("Kullanıcı adı veya şifre hatalı");
+                else
+                {
+                    if (await _appUserService.CheckPassword(appUserLoginDto))
+                    {
+                        var roles = await _appUserService.GetRolesByUsername(appUserLoginDto.Username);
+                        var token = _jwtService.GenerateJwt(appUser, roles);
+                        JwtAccessToken jwtAccessToken = new JwtAccessToken();
+                        jwtAccessToken.Token = token;
+                        return Created("", jwtAccessToken);
+                    }
+                    return BadRequest("Kullanıcı adı veya şifre hatalı");
+                }
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
             }
         }
 
         [HttpPost("[action]")]
         //[ValidModel]
-        public async Task<IActionResult> SignUp(AppUserAddDto appUserAddDto, [FromServices]IAppUserRoleService appUserRoleService, [FromServices] IAppRoleService appRoleService)
+        public async Task<IActionResult> SignUp(AppUserAddDto appUserAddDto, [FromServices] IAppUserRoleService appUserRoleService, [FromServices] IAppRoleService appRoleService)
         {
             var appUser = await _appUserService.FindByUsername(appUserAddDto.Username);
             if (appUser != null)
@@ -78,12 +86,21 @@ namespace PYBS.WebAPI.Controllers
         [Authorize]
         public async Task<IActionResult> ActiveUser()
         {
+
             var user = await _appUserService.FindByUsername(User.Identity.Name);
             var roles = await _appUserService.GetRolesByUsername(User.Identity.Name);
+            string pathToImage = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", user.ImageUrl);
+            byte[] imageBytes = System.IO.File.ReadAllBytes(pathToImage);
+
+
             AppUserDto appUserDto = new AppUserDto()
             {
+                Id = user.Id,
+                Name = user.Name,
+                Surname = user.Surname,
                 Username = user.Username,
-                Roles = roles.Select(x => x.Name).ToList()
+                Roles = roles.Select(x => x.Name).ToList(),
+                ImageData = Convert.ToBase64String(imageBytes)
             };
             return Ok(appUserDto);
         }

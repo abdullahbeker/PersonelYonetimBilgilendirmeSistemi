@@ -3,9 +3,9 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 import Text from './CustomText'
 import { colors, fonts } from '../custom/Theme'
 
-export default ({ title, onPress }) => {
+export default ({ title, onPress, disabled }) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles.container} onPress={onPress} disabled={disabled ? disabled : false}>
       <Text style={styles.title}>{title}</Text>
     </TouchableOpacity>
   )

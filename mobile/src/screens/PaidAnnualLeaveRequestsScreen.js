@@ -6,7 +6,6 @@ import Text from '../components/CustomText'
 import { fonts, colors } from '../custom/Theme'
 import Table from '../components/Table'
 import api from '../api'
-import { UserContext } from '../contexes/UserContext'
 import Notification from '../components/Notification'
 import { MessageDispatchContext } from '../contexes/MessageContext'
 import YesNoAlert from '../components/YesNoAlert'
@@ -16,8 +15,6 @@ import OverlayWithActions from '../components/OverlayWithActions'
 import DateRangePicker from './../components/DateRangePicker'
 
 export default ({}) => {
-  const userState = useContext(UserContext)
-  const { user } = userState
   let { now, tomorrow } = dates()
   const messageDispatch = useContext(MessageDispatchContext)
 
@@ -61,7 +58,7 @@ export default ({}) => {
       const res = await api.post('/api/annualleave/demandAnnualPaidLeaveRight', {
         startDate,
         finishDate: returnDate,
-        personnelId: user.id
+        personnelId: 5
       })
       if (res.data) {
         setPaidAnnualLeaves(res.data.list)
@@ -84,7 +81,7 @@ export default ({}) => {
   const fetchAnnualPaidLeaves = async () => {
     try {
       if (error) setError(null)
-      const res = await api.get(`/api/annualleave/getRequestedAnnualPaidLeavesById/${user.id}`)
+      const res = await api.get(`/api/annualleave/getRequestedAnnualPaidLeavesById/`)
       setPaidAnnualLeaves(res.data.list)
       setRemainingLeaveDayCount(res.data.remainingDay)
     } catch (err) {
@@ -127,7 +124,10 @@ export default ({}) => {
     <>
       <Notification />
       <Container>
-        <FetchAndRefreshIfFails error={error} fetching={fetchingPaidAnnualLeaves} onRefreshPress={fetchAnnualPaidLeaves}>
+        <FetchAndRefreshIfFails
+          error={error}
+          fetching={fetchingPaidAnnualLeaves}
+          onRefreshPress={fetchAnnualPaidLeaves}>
           <View style={styles.up}>
             <OverlayWithActions
               isVisible={isOverlayVisible}
@@ -137,7 +137,9 @@ export default ({}) => {
               onSubmitPress={handlePaidAnnualLeaveRequest}
               onCancelPress={() => setIsOverlayVisible(false)}>
               <Text>Kullanılabilir Gün Sayısı</Text>
-              <Text style={{ marginBottom: 10, textAlign: 'center', fontFamily: fonts.oxygenBold, marginTop: 5 }}>{remainingLeaveDayCount}</Text>
+              <Text style={{ marginBottom: 10, textAlign: 'center', fontFamily: fonts.oxygenBold, marginTop: 5 }}>
+                {remainingLeaveDayCount}
+              </Text>
 
               <DateRangePicker
                 startValue={startDate}
@@ -190,7 +192,9 @@ export default ({}) => {
               <Table rows={rows()} cols={componentifyLeaveRequests(paidAnnualLeaves, handleLeaveRequestDelete)} />
             </ScrollView>
           </ScrollView>
-          <Text style={styles.info}>Toplam sütünundaki sarı ile gösterilen sayılar pazar gününe denk gelen gün sayısıdır</Text>
+          <Text style={styles.info}>
+            Toplam sütünundaki sarı ile gösterilen sayılar pazar gününe denk gelen gün sayısıdır
+          </Text>
         </FetchAndRefreshIfFails>
       </Container>
     </>

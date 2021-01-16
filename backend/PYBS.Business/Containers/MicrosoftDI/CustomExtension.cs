@@ -42,9 +42,7 @@ namespace PYBS.Business.Containers.MicrosoftDI
 
             services.AddScoped<ITrainingPersonnelDal, EfTrainingPersonnelRepository>();
             services.AddScoped<ITrainingPersonnelService, TrainingPersonnelManager>();
-
-            services.AddScoped<ITrainingStatusDal, EfTrainingStatusRepository>();
-            services.AddScoped<ITrainingStatusService, TrainingStatusManager>();
+            
         }
     }
 }

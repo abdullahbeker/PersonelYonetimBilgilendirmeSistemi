@@ -11,9 +11,7 @@ namespace PYBS.DataAccess.Concrete.EntityFrameworkCore.Mapping.TrainingMaps
     {
         public void Configure(EntityTypeBuilder<TrainingPersonnel> builder)
         {
-            builder.HasNoKey();
-            builder.HasIndex(x => new { x.TrainingId, x.PersonnelId }).IsUnique();
-            builder.Property(x => x.StatusId).IsRequired();
+            builder.HasKey(x => new { x.TrainingId, x.PersonnelId });
         }
     }
 }

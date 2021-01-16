@@ -17,14 +17,19 @@ namespace PYBS.WebAPI.Controllers
     [ApiController]
     public class LeaveController : ControllerBase
     {
+        private readonly IMapper _mapper;
+        private PYBSContext context = new PYBSContext();
+        public LeaveController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
 
-        private PYBSContext context= new PYBSContext();
-        
-        [HttpPost("Leave-request")]
-        public async Task<IActionResult> AddLeave(LeaveRequest leave)
+        [HttpPost("[action]")]
+        public async Task<IActionResult> AddLeave(LeaveRequestAddDto model)
         {
             try
             {
+                var leave = _mapper.Map<LeaveRequest>(model);
                 leave.LeaveStatusId = 1;
                 context.LeaveRequests.Add(leave);
                 await context.SaveChangesAsync();
@@ -35,28 +40,92 @@ namespace PYBS.WebAPI.Controllers
                 return BadRequest(ex);
             }
         }
-        [HttpGet("admin/leave-request")]
-        public async Task<List<LeaveRequest>> GetAllLeave()
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAllLeaves()
         {
-            return await context.LeaveRequests.ToListAsync();
+            List<LeaveRequstViewDto> data = new List<LeaveRequstViewDto>();
+            var leaveRequestes = await context.LeaveRequests
+                .Include(lr => lr.LeaveType)
+                .Include(lr => lr.AppUser)
+                .Include(lr => lr.LeaveStatus)
+                .OrderBy(lr=>lr.LeaveStatusId)
+                .ToListAsync();
+            foreach (var leave in leaveRequestes)
+            {
+                var model = new LeaveRequstViewDto
+                {
+                    RequestId = leave.Id,
+                    UserId = leave.AppUser.Id,
+                    FullName = leave.AppUser.Name + " " + leave.AppUser.Surname,
+                    Status = leave.LeaveStatus.Name,
+                    CreatedAt = leave.CreatedAt,
+                    IsPaid = leave.LeaveType.IsPaid,
+                    LeaveFinishDate = leave.LeaveFinishDate,
+                    LeaveStartDate = leave.LeaveStartDate,
+                    LeaveTypeName = leave.LeaveType.LeaveName
+                };
+                data.Add(model);
+            }
+            return Ok(data);
         }
-        [HttpGet("leave-request/{id}")]
+        [HttpGet("[action]")]
         public async Task<IActionResult> GetLeave(int id)
         {
-            var leave = await context.LeaveRequests.FirstOrDefaultAsync(x => x.Id == id);
-            if (leave==null) BadRequest();
-            return Ok(leave);
-        }
-        [HttpGet("leave-request-list/{personnelId}")]
-        public async Task<IActionResult> GetLeaves(int personnelId)
-        {
-            var leave = await context.LeaveRequests.Where(x => x.UserId == personnelId).ToListAsync();
-            if (leave.Count == 0) return BadRequest();
+            var leaveRequest = await context.LeaveRequests
+                .Include(lr => lr.LeaveType)
+                .Include(lr => lr.AppUser)
+                .Include(lr => lr.LeaveStatus)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var leave = new LeaveRequstViewDto
+            {
+                RequestId = leaveRequest.Id,
+                UserId = leaveRequest.AppUser.Id,
+                FullName = leaveRequest.AppUser.Name + " " + leaveRequest.AppUser.Surname,
+                Status = leaveRequest.LeaveStatus.Name,
+                CreatedAt = leaveRequest.CreatedAt,
+                IsPaid = leaveRequest.LeaveType.IsPaid,
+                LeaveFinishDate = leaveRequest.LeaveFinishDate,
+                LeaveStartDate = leaveRequest.LeaveStartDate,
+                LeaveTypeName = leaveRequest.LeaveType.LeaveName
+            };
             return Ok(leave);
         }
 
-        [HttpPost("admin/approval-leave-request")]
-        public async Task<IActionResult> LeaveStatus([FromBody]ApprovalLeave data)
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAllLeavesByPersonnelId(int personnelId)
+        {
+            List<LeaveRequstViewDto> data = new List<LeaveRequstViewDto>();
+            var leaveRequestes = await context.LeaveRequests
+                .Include(lr => lr.LeaveType)
+                .Include(lr => lr.AppUser)
+                .Include(lr => lr.LeaveStatus)
+                .Where(x => x.UserId==personnelId)
+                .OrderByDescending(x=>x.CreatedAt)
+                .ToListAsync(); ;
+
+            foreach (var leave in leaveRequestes)
+            {
+                var model = new LeaveRequstViewDto
+                {
+                    RequestId = leave.Id,
+                    UserId = leave.AppUser.Id,
+                    FullName = leave.AppUser.Name + " " + leave.AppUser.Surname,
+                    Status = leave.LeaveStatus.Name,
+                    CreatedAt = leave.CreatedAt,
+                    IsPaid = leave.LeaveType.IsPaid,
+                    LeaveFinishDate = leave.LeaveFinishDate,
+                    LeaveStartDate = leave.LeaveStartDate,
+                    LeaveTypeName = leave.LeaveType.LeaveName
+                };
+                data.Add(model);
+            }
+            return Ok(data);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> LeaveStatus([FromBody] ApprovalLeaveDto data)
         {
             try
             {
@@ -72,103 +141,27 @@ namespace PYBS.WebAPI.Controllers
                 return StatusCode(500);
             }
         }
-        public class ApprovalLeave
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> LeaveApproval(LeaveApprovalDto leaveApprovalDto)
         {
-            public int statusId { get; set; }
-            public int leaveId { get; set; }
+            try
+            {
+                var leave = await context.LeaveRequests.FirstOrDefaultAsync(x => x.Id == leaveApprovalDto.LeaveRequestId);
+                if (leave == null)
+                {
+                    return BadRequest();
+                }
+                leave.LeaveStatusId = leaveApprovalDto.LeaveStatusId;
+                context.LeaveRequests.Update(leave);
+                await context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
-        //private readonly ILeaveTypeService _leaveTypeService;
-        //private readonly ILeaveRequestService _leaveRequestService;
-        //private readonly IMapper _mapper;
-
-        //public LeaveController(ILeaveTypeService leaveTypeService, ILeaveRequestService leaveRequestService, IMapper mapper)
-        //{
-        //    _mapper = mapper;
-        //    _leaveRequestService = leaveRequestService;
-        //    _leaveTypeService = leaveTypeService;
-        //}
-        //[HttpGet("[action]")]
-        //public async Task<IActionResult> GetAll()
-        //{
-        //    var requests = await _leaveRequestService.GetAllWithReferences();
-        //    List<LeaveRequestListAllDto> leaveRequestList = new List<LeaveRequestListAllDto>();
-        //    foreach (var request in requests)
-        //    {
-        //        LeaveRequestListAllDto leaveRequest = new LeaveRequestListAllDto();
-        //        leaveRequest.Id = request.Id;
-        //        leaveRequest.UserId = request.UserId;
-        //        leaveRequest.Name = request.AppUser.Name;
-        //        leaveRequest.Surname = request.AppUser.Surname;
-        //        leaveRequest.LeaveStatusName = request.LeaveStatus.Name;
-        //        leaveRequest.LeaveTypeName = request.LeaveType.LeaveName;
-        //        leaveRequest.LeaveStartDate = request.LeaveStartDate;
-        //        leaveRequest.LeaveFinishDate = request.LeaveFinishDate;
-
-        //        leaveRequestList.Add(leaveRequest);
-        //    }
-        //    return Ok(leaveRequestList);
-        //}
-        //[HttpGet("[action]/{id}")]
-        //public async Task<IActionResult> GetById(int id)
-        //{
-        //    return Ok(await _leaveRequestService.GetById(id));
-        //}
-        //[HttpGet("[action]/{id}")]
-        //public async Task<IActionResult> GetAllByUserId(int id)
-        //{
-        //    var requests = await _leaveRequestService.GetAllWithReferences();
-        //    LeaveRequestListWithUserDto leaveRequestListWithUser = new LeaveRequestListWithUserDto();
-        //    leaveRequestListWithUser.UserId = requests[0].AppUser.Id;
-        //    leaveRequestListWithUser.Name = requests[0].AppUser.Name;
-        //    leaveRequestListWithUser.Surname = requests[0].AppUser.Surname;
-
-        //    List<LeaveRequestListDto> leaveRequestList = new List<LeaveRequestListDto>();
-        //    foreach (var request in requests)
-        //    {
-        //        LeaveRequestListDto leaveRequest = new LeaveRequestListDto();
-        //        leaveRequest.Id = request.Id;
-        //        leaveRequest.LeaveStatusName = request.LeaveStatus.Name;
-        //        leaveRequest.LeaveTypeName = request.LeaveType.LeaveName;
-        //        leaveRequest.LeaveStartDate = request.LeaveStartDate;
-        //        leaveRequest.LeaveFinishDate = request.LeaveFinishDate;
-
-        //        leaveRequestList.Add(leaveRequest);
-        //    }
-        //    leaveRequestListWithUser.LeaveRequestLists = leaveRequestList;
-        //    return Ok(leaveRequestListWithUser);
-        //}
-        //[HttpPost]
-        //public async Task<IActionResult> CreateType(LeaveTypeAddDto leaveTypeAddDto)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        await _leaveTypeService.Add(_mapper.Map<LeaveType>(leaveTypeAddDto));
-        //        return Created("", leaveTypeAddDto);
-        //    }
-        //    return BadRequest();
-        //}
-        //[HttpPost]
-        //public async Task<IActionResult> CreateRequest(LeaveRequestAddDto leaveRequestAddDto)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        await _leaveRequestService.Add(_mapper.Map<LeaveRequest>(leaveRequestAddDto));
-        //        return Created("", leaveRequestAddDto);
-        //    }
-        //    return BadRequest();
-        //}
-        //[HttpPut]
-        //public async Task<IActionResult> ApproveRequest(int id)
-        //{
-        //    await _leaveRequestService.ApproveRequest(id);
-        //    return NoContent();
-        //}
-        //[HttpPut]
-        //public async Task<IActionResult> RejectRequest(int id)
-        //{
-        //    await _leaveRequestService.RejectRequest(id);
-        //    return Ok();
-        //}
     }
 
 }

@@ -64,7 +64,7 @@ namespace PYBS.DataAccess.Migrations
                     b.Property<int?>("ChildCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Department")
@@ -86,6 +86,9 @@ namespace PYBS.DataAccess.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("EmployerCompany")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
@@ -104,6 +107,12 @@ namespace PYBS.DataAccess.Migrations
                     b.Property<string>("IdentityNumber")
                         .HasColumnType("nvarchar(11)")
                         .HasMaxLength(11);
+
+                    b.Property<string>("ImageContentType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsWorking")
                         .HasColumnType("bit");
@@ -195,6 +204,49 @@ namespace PYBS.DataAccess.Migrations
                     b.ToTable("AppUserRoles");
                 });
 
+            modelBuilder.Entity("PYBS.Entity.Concrete.Asset", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("GivenDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("PersonnelId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ReturnDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SerialNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonnelId");
+
+                    b.ToTable("Assets");
+                });
+
             modelBuilder.Entity("PYBS.Entity.Concrete.BloodType", b =>
                 {
                     b.Property<int>("Id")
@@ -264,9 +316,6 @@ namespace PYBS.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AppUserId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -276,10 +325,10 @@ namespace PYBS.DataAccess.Migrations
                     b.Property<DateTime>("LeaveStartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("LeaveStatusId")
+                    b.Property<int>("LeaveStatusId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("LeaveTypeId")
+                    b.Property<int>("LeaveTypeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -290,11 +339,11 @@ namespace PYBS.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
                     b.HasIndex("LeaveStatusId");
 
                     b.HasIndex("LeaveTypeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("LeaveRequests");
                 });
@@ -321,7 +370,7 @@ namespace PYBS.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool?>("IsPaid")
+                    b.Property<bool>("IsPaid")
                         .HasColumnType("bit");
 
                     b.Property<string>("LeaveName")
@@ -370,7 +419,7 @@ namespace PYBS.DataAccess.Migrations
                     b.ToTable("Provinces");
                 });
 
-            modelBuilder.Entity("PYBS.Entity.Concrete.Training", b =>
+            modelBuilder.Entity("PYBS.Entity.Concrete.TrainingEntities.Training", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -405,6 +454,9 @@ namespace PYBS.DataAccess.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<string>("TrainingName")
                         .IsRequired()
                         .HasColumnType("nvarchar(75)")
@@ -415,39 +467,19 @@ namespace PYBS.DataAccess.Migrations
                     b.ToTable("Trainings");
                 });
 
-            modelBuilder.Entity("PYBS.Entity.Concrete.TrainingPersonnel", b =>
+            modelBuilder.Entity("PYBS.Entity.Concrete.TrainingEntities.TrainingPersonnel", b =>
                 {
-                    b.Property<int>("PersonnelId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StatusId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TrainingId")
                         .HasColumnType("int");
 
-                    b.HasIndex("TrainingId", "PersonnelId")
-                        .IsUnique();
+                    b.Property<int>("PersonnelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TrainingId", "PersonnelId");
+
+                    b.HasIndex("PersonnelId");
 
                     b.ToTable("TrainingPersonnels");
-                });
-
-            modelBuilder.Entity("PYBS.Entity.Concrete.TrainingStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Name")
-                        .HasColumnType("int")
-                        .HasMaxLength(20);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TrainingStatuses");
                 });
 
             modelBuilder.Entity("PYBS.Entity.Concrete.AppUser", b =>
@@ -486,8 +518,14 @@ namespace PYBS.DataAccess.Migrations
                     b.HasOne("PYBS.Entity.Concrete.AppUser", "AppUser")
                         .WithMany("AppUserRoles")
                         .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PYBS.Entity.Concrete.Asset", b =>
+                {
+                    b.HasOne("PYBS.Entity.Concrete.AppUser", "AppUser")
+                        .WithMany("Assets")
+                        .HasForeignKey("PersonnelId");
                 });
 
             modelBuilder.Entity("PYBS.Entity.Concrete.District", b =>
@@ -501,17 +539,38 @@ namespace PYBS.DataAccess.Migrations
 
             modelBuilder.Entity("PYBS.Entity.Concrete.LeaveRequest", b =>
                 {
-                    b.HasOne("PYBS.Entity.Concrete.AppUser", "AppUser")
-                        .WithMany("LeaveRequests")
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("PYBS.Entity.Concrete.LeaveStatus", "LeaveStatus")
                         .WithMany("LeaveRequests")
-                        .HasForeignKey("LeaveStatusId");
+                        .HasForeignKey("LeaveStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PYBS.Entity.Concrete.LeaveType", "LeaveType")
                         .WithMany("LeaveRequests")
-                        .HasForeignKey("LeaveTypeId");
+                        .HasForeignKey("LeaveTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PYBS.Entity.Concrete.AppUser", "AppUser")
+                        .WithMany("LeaveRequests")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PYBS.Entity.Concrete.TrainingEntities.TrainingPersonnel", b =>
+                {
+                    b.HasOne("PYBS.Entity.Concrete.AppUser", "AppUser")
+                        .WithMany("TrainingPersonnels")
+                        .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PYBS.Entity.Concrete.TrainingEntities.Training", "Training")
+                        .WithMany("TrainingPersonnels")
+                        .HasForeignKey("TrainingId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

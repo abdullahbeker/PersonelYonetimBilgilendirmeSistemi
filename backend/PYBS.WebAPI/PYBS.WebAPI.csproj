@@ -7,11 +7,20 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.11" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PYBS.Business\PYBS.Business.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Content\Images\Personnel\637460983235486699_ex1.jpg" />
+    <None Include="wwwroot\Content\Images\Personnel\637460986297564085_ex1.jpg" />
+    <None Include="wwwroot\Content\Images\Personnel\637460989178875700_ex1.jpg" />
+    <None Include="wwwroot\Content\Images\Personnel\637461006039999356_ex1.jpg" />
+    <None Include="wwwroot\Content\Images\Personnel\637461010717944733_ex1.jpg" />
   </ItemGroup>
 
 
