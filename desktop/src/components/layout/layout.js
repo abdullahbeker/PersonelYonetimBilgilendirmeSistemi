@@ -12,13 +12,17 @@ const Layout = ({ children }) => {
   const userDispatch = useContext(UserDispatchContext)
 
   useEffect(() => {
-    handleGetAsync(api, '/api/auth/activeuser', res => {
-      console.log(res.data)
-      userDispatch(res.data)
-      setIsFetchingUser(false)
-    }, toastDispatch, res => {
-      
-    })
+    handleGetAsync(
+      api,
+      '/api/auth/activeuser',
+      res => {
+        console.log(res.data)
+        userDispatch(res.data)
+        setIsFetchingUser(false)
+      },
+      toastDispatch,
+      res => {}
+    )
   }, [])
 
   return isFetchingUser ? (
@@ -30,7 +34,6 @@ const Layout = ({ children }) => {
         <Header />
         <div className='c-body'>
           <main className='c-main'>
-
             <CContainer fluid>{children}</CContainer>
           </main>
         </div>
@@ -41,4 +44,3 @@ const Layout = ({ children }) => {
 }
 
 export default Layout
-

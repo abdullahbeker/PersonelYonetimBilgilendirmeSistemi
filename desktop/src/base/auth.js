@@ -1,4 +1,3 @@
-
 import api, { addTokenToHeader, removeAuthToken, handleGetAsync, handlePostAsync } from './api'
 
 class Auth {
@@ -7,13 +6,13 @@ class Auth {
     this.authenticated = false
   }
 
-  login(username, password, toastDispatch, successCallback, errorCallback) {
+  login(Username, Password, toastDispatch, successCallback, errorCallback) {
     handlePostAsync(
       api,
       '/api/auth/signin',
       {
-        username,
-        password
+        Username,
+        Password,
       },
       res => {
         addTokenToHeader(res.data.token, api)

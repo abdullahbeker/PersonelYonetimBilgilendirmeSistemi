@@ -12,11 +12,12 @@ import {
   CInputGroup,
   CInputGroupPrepend,
   CInputGroupText,
-  CRow
+  CRow,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import auth from '../../base/auth'
 import { ToastDispatchContext } from '../../contexts/ToastContext'
+import { UserDispatchContext } from '../../contexts/UserContext'
 
 const Login = props => {
   const [username, setUsername] = useState('')
@@ -66,7 +67,7 @@ const Login = props => {
                       placeholder='Kimlik Numarası'
                       autoComplete='none'
                       value={username}
-                      maxLength={11}
+                      maxLength={20}
                       onChange={e => setUsername(e.target.value)}
                     />
                   </CInputGroup>

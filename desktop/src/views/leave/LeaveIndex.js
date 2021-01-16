@@ -1,10 +1,16 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import { CDataTable, CBadge, CButton, CCollapse, CCardBody, CContainer } from '@coreui/react'
-import { usersData } from './usersData'
+import React, { useState, useEffect, useContext, Component } from 'react'
+import { useHistory, Link } from 'react-router-dom'
+import api, { handleGetAsync, handlePostAsync } from '../../base/api'
+import { ToastDispatchContext } from '../../contexts/ToastContext'
+import { CDataTable, CBadge, CButton, CCollapse, CCardBody, CContainer, CSpinner, CCard } from '@coreui/react'
+
 const LeaveIndex = props => {
   const history = useHistory()
   const [details, setDetails] = useState([])
+  const [leaves, setLeaves] = useState([])
+  const toastDispatch = useContext(ToastDispatchContext)
+  const [isLoading, setIsLoading] = useState(true)
+
   const toggleDetails = index => {
     const position = details.indexOf(index)
     let newDetails = details.slice()
@@ -18,11 +24,49 @@ const LeaveIndex = props => {
   const leaveDetailHandler = e => {
     history.push('/leave-detail')
   }
+  const approveLeave = e => {
+    handlePostAsync(
+      api,
+      `api/leave/LeaveApproval`,
+      { LeaveRequestId: e.target.id, LeaveStatusId: 2 },
+      () => {
+        toastDispatch({ type: 'success', message: 'İzin talebi onaylandı.' })
+        setLeaves()
+      },
+      toastDispatch,
+      () => {}
+    )
+  }
+  const rejectLeave = e => {
+    handlePostAsync(
+      api,
+      `api/leave/LeaveApproval`,
+      { LeaveRequestId: e.target.id, LeaveStatusId: 3 },
+      () => {
+        toastDispatch({ type: 'error', message: 'İzin talebi reddedildi.' })
+        setLeaves()
+      },
+      toastDispatch,
+      () => {}
+    )
+  }
+  useEffect(() => {
+    handleGetAsync(
+      api,
+      `/api/leave/getallleaves`,
+      res => {
+        setLeaves(res.data)
+        setIsLoading(false)
+      },
+      toastDispatch,
+      res => {}
+    )
+  }, [leaves])
   const fields = [
-    { key: 'name', label: 'Ad Soyad', _style: { width: '25%' } },
-    { key: 'LeaveTypeName', label: 'İzin Adı' },
-    { key: 'LeaveStartDate', label: 'Başlangıç', _style: { width: '15%' } },
-    { key: 'LeaveFinishDate', label: 'Bitiş', _style: { width: '15%' } },
+    { key: 'fullName', label: 'Ad', _style: { width: '25%' } },
+    { key: 'leaveTypeName', label: 'İzin Adı' },
+    { key: 'leaveStartDate', label: 'Başlangıç', _style: { width: '15%' } },
+    { key: 'leaveFinishDate', label: 'Bitiş', _style: { width: '15%' } },
     { key: 'status', label: 'Durum', _style: { width: '10%' } },
     {
       key: 'show_details',
@@ -45,16 +89,24 @@ const LeaveIndex = props => {
         return 'primary'
     }
   }
+  const customFilter = { placeholder: 'bir şeyler yazın...', label: 'Ara: ' }
 
+  if (isLoading) {
+    return (
+      <div className='d-flex justify-content-center'>
+        <CSpinner></CSpinner>
+      </div>
+    )
+  }
   return (
-    <CContainer>
+    <CCard className='p-3'>
       <CDataTable
-        items={usersData}
+        items={leaves}
         fields={fields}
         columnFilter
-        tableFilter
+        tableFilter={customFilter}
         itemsPerPageSelect
-        itemsPerPage={5}
+        itemsPerPage={10}
         hover
         sorter
         pagination
@@ -86,18 +138,20 @@ const LeaveIndex = props => {
                 <CCollapse show={details.includes(index)}>
                   <CCardBody>
                     <h4>{item.name}</h4>
-                    <h4>Oluşturulma Tarihi :{item.createdAt}</h4>
+                    <h4>Oluşturulma Tarihi :{new Date(item.createdAt).toLocaleString('tr-TR', { timeZone: 'UTC' })}</h4>
                     {item.isPaid ? <h4>Ücretli</h4> : <h4>Ücretsiz</h4>}
-                    <CButton size='sm' color='primary' onClick={leaveDetailHandler}>
+                    {/* <CButton size='sm' color='primary' onClick={leaveDetailHandler}>
                       İzin İstek Detaylarını Görüntüle
-                    </CButton>
+                    </CButton> */}
                     <CButton size='sm' color='info' className='ml-1'>
-                      Personel Sayfasına Git
+                      <Link style={{ color: 'white' }} to={`/personneldetail/${item.userId}`}>
+                        Personel Sayfasına Git
+                      </Link>
                     </CButton>
-                    <CButton size='sm' color='success' className='ml-1'>
+                    <CButton id={item.requestId} onClick={approveLeave} size='sm' color='success' className='ml-1'>
                       Onayla
                     </CButton>
-                    <CButton size='sm' color='danger' className='ml-1'>
+                    <CButton id={item.requestId} onClick={rejectLeave} size='sm' color='danger' className='ml-1'>
                       Reddet
                     </CButton>
                   </CCardBody>
@@ -108,9 +162,11 @@ const LeaveIndex = props => {
               <CCollapse show={details.includes(index)}>
                 <CCardBody>
                   <h4>{item.name}</h4>
-                  Oluşturulma Tarihi : <h4>{item.createdAt}</h4>
+                  Talep Tarihi :<h4>{new Date(item.createdAt).toLocaleString('tr-TR', { timeZone: 'UTC' })}</h4>
                   <CButton size='sm' color='info'>
-                    Personel Sayfasına Git
+                    <Link style={{ color: 'white' }} to={`/personneldetail/${item.userId}`}>
+                      Personel Sayfasına Git
+                    </Link>
                   </CButton>
                 </CCardBody>
               </CCollapse>
@@ -118,7 +174,7 @@ const LeaveIndex = props => {
           },
         }}
       />
-    </CContainer>
+    </CCard>
   )
 }
 

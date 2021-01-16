@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { SidebarContext, SidebarContextDispatch } from '../../contexts/SidebarContext'
+import { UserContext } from '../../contexts/UserContext'
 import { CHeader, CToggler, CHeaderBrand, CHeaderNav, CHeaderNavItem, CHeaderNavLink, CSubheader, CBreadcrumbRouter, CLink } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
@@ -13,7 +14,7 @@ import { HeaderDropdown } from '../'
 const Header = () => {
   const dispatch = useContext(SidebarContextDispatch)
   const { sidebarShow } = useContext(SidebarContext)
-
+  const { name, surname } = useContext(UserContext)
   const toggleSidebar = () => {
     const val = [true, 'responsive'].includes(sidebarShow) ? false : 'responsive'
     dispatch({ type: 'set', sidebarShow: val })
@@ -47,10 +48,9 @@ const Header = () => {
       </CHeaderNav> */}
 
       <CHeaderNav className='ml-auto px-3'>
-        {'ABDULLAH BEKER'}
+        {name + ' ' + surname}
         <HeaderDropdown />
       </CHeaderNav>
-
     </CHeader>
   )
 }

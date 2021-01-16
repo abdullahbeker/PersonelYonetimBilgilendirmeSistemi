@@ -4,7 +4,7 @@ import { CButton } from '@coreui/react'
 export default function PersonnelLeaveIndex() {
   return (
     <div>
-      <table class='table table-striped'>
+      <table className='table table-striped'>
         <thead>
           <tr>
             <th>Name</th>

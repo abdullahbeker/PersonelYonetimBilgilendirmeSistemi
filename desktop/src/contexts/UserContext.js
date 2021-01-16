@@ -4,8 +4,12 @@ const UserDispatchContext = createContext()
 
 export default ({ children }) => {
   const initialState = {
+    id: '',
+    name: '',
+    surname: '',
     username: '',
-    roles: []
+    imageData: '',
+    roles: [],
   }
   const [state, setState] = useState(initialState)
   return (

@@ -1,21 +1,27 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { CBadge, CDropdown, CDropdownItem, CDropdownMenu, CDropdownToggle, CImg } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import auth from '../../base/auth'
 import { withRouter } from 'react-router-dom'
+import { UserContext } from '../../contexts/UserContext'
 
 const HeaderDropdown = props => {
+  const { imageData } = useContext(UserContext)
+
   const handleLogout = e => {
     e.preventDefault()
     auth.logout()
     props.history.push('/login')
   }
-
+  const userDetail = e => {
+    e.preventDefault()
+    props.history.push('/profile')
+  }
   return (
     <CDropdown inNav className='c-header-nav-items mx-2' direction='down'>
       <CDropdownToggle className='c-header-nav-link' caret={false}>
         <div className='c-avatar'>
-          <CImg src={'avatars/avatar-2.png'} className='c-avatar-img' alt='admin@bootstrapmaster.com' />
+          <CImg src={`data:image/jpeg;base64,${imageData}`} className='c-avatar-img' alt='admin@bootstrapmaster.com' />
         </div>
       </CDropdownToggle>
       <CDropdownMenu className='pt-0' placement='bottom-end'>
@@ -53,7 +59,7 @@ const HeaderDropdown = props => {
         <CDropdownItem header tag='div' color='light' className='text-center'>
           <strong>Kullanıcı Menüsü</strong>
         </CDropdownItem>
-        <CDropdownItem>
+        <CDropdownItem onClick={userDetail}>
           <CIcon name='cil-user' className='mfe-2' />
           Profil
         </CDropdownItem>
